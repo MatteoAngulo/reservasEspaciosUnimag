@@ -16,7 +16,8 @@ public class Espacio {
     @Column(nullable = false)
     private String nombre;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private String tipo;
 
     @Column
