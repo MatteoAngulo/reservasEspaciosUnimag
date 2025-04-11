@@ -11,13 +11,16 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
-
 @Service
 public class EspacioServiceImpl implements EspacioService {
 
     private final EspacioRepository repository;
     private final EspacioMapper mapper;
+
+    public EspacioServiceImpl(EspacioRepository repository, EspacioMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public EspacioDTOResponse crearEspacio(EspacioDTOResquests espacioDTO) {
