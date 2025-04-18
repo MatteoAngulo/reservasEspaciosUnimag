@@ -2,6 +2,8 @@ package edu.unimagdalena.reservasespacios.entities;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,4 +28,10 @@ public class Espacio {
     @ManyToOne
     @JoinColumn(name = "id_sede", referencedColumnName = "id")
     private Sede sede;
+
+    @OneToMany(mappedBy = "espacio")
+    private List<EspacioDisponible> espaciosDisponibles;
+
+    @OneToMany(mappedBy = "espacio")
+    private List<Problema> problemas;
 }
