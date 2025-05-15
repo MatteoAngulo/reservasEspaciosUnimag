@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,6 +22,6 @@ public class Sede {
     private String name;
 
     @OneToMany(mappedBy = "sede")
-    private Set<Espacio> espacios;
+    private List<Espacio> espacios;
 
 }

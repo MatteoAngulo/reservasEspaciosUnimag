@@ -12,15 +12,16 @@ import java.util.List;
 @Entity
 @Table(name = "espacios")
 public class Espacio {
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long idEspacio;
 
     @Column(nullable = false)
     private String nombre;
 
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String tipo;
+    private TipoEspacio tipo;
 
     @Column
     private String restricciones;
@@ -30,7 +31,7 @@ public class Espacio {
     private Sede sede;
 
     @OneToMany(mappedBy = "espacio")
-    private List<EspacioDisponible> espaciosDisponibles;
+    private List<Reserva> reservas;
 
     @OneToMany(mappedBy = "espacio")
     private List<Problema> problemas;

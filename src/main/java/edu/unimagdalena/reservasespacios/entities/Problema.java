@@ -24,9 +24,9 @@ public class Problema {
     @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
     private Espacio espacio;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estado", referencedColumnName = "idEstado")
-    private Estado estado;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private EstadoProblema estado;
 
     @Column(nullable = false)
     @Size(min = 5, max = 250)

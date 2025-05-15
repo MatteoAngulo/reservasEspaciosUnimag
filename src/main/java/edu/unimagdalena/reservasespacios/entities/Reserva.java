@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -22,16 +23,23 @@ public class Reserva {
     private Long idReserva;
 
     @ManyToOne
-    @JoinColumn(name = "id_estado", referencedColumnName = "idEstado")
-    private Estado estado;
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "id_espacio_disponible", referencedColumnName = "idEspacioDisponible")
-    private EspacioDisponible espacioDisponible;
-
-    @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante")
     private Estudiante estudiante;
+
+    @ManyToOne
+    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario")
+    private Horario horario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
+    private Espacio espacio;
+    
+    @OneToMany(mappedBy = "reserva")
+    private List<HistorialReserva> historialReservas;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EstadoReserva estado;
 
     @Column
     @Future

@@ -1,0 +1,40 @@
+package edu.unimagdalena.reservasespacios.entities;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
+
+public class HistorialReserva {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idHistorial;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "id_reserva", referencedColumnName = "idReserva")
+    private Reserva reserva;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_reserva", nullable = false)
+    private EstadoReserva estadoReserva;
+
+    @Column
+    private LocalDateTime fechaCambio;
+
+    @Size(max = 256)
+    @Column
+    private String comentario;
+}

@@ -1,6 +1,6 @@
 package edu.unimagdalena.reservasespacios.entities;
 
-public enum TiposEspacios {
+public enum TipoEspacio {
     Canchas,
     Auditorios,
     Cubículos,

@@ -21,8 +21,8 @@ public class Horario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHorario;
 
-    @OneToMany(mappedBy = "espacio")
-    private List<EspacioDisponible> espaciosDisponibles;
+    @OneToMany(mappedBy = "horario")
+    private List<Reserva> reservas;
 
     @Column(nullable = false)
     private Date fecha;
