@@ -2,10 +2,9 @@ package edu.unimagdalena.reservasespacios.controllers;
 
 import edu.unimagdalena.reservasespacios.dtos.requests.EspacioDTOResquests;
 import edu.unimagdalena.reservasespacios.dtos.response.EspacioDTOResponse;
-import edu.unimagdalena.reservasespacios.services.implementss.EspacioServiceImpl;
+import edu.unimagdalena.reservasespacios.services.impl.EspacioServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,12 +1,8 @@
 package edu.unimagdalena.reservasespacios.dtos.mappers;
 
 
-import edu.unimagdalena.reservasespacios.dtos.requests.EspacioDTOResquests;
 import edu.unimagdalena.reservasespacios.dtos.response.EspacioDTOResponse;
 import edu.unimagdalena.reservasespacios.entities.Espacio;
-import edu.unimagdalena.reservasespacios.entities.Sede;
-import edu.unimagdalena.reservasespacios.services.implementss.EspacioServiceImpl;
-import edu.unimagdalena.reservasespacios.services.interfaces.EspacioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

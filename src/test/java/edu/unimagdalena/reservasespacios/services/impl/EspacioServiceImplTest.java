@@ -1,4 +1,4 @@
-package edu.unimagdalena.reservasespacios.services.implementss;
+package edu.unimagdalena.reservasespacios.services.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,11 +9,7 @@ import edu.unimagdalena.reservasespacios.dtos.requests.EspacioDTOResquests;
 import edu.unimagdalena.reservasespacios.dtos.response.EspacioDTOResponse;
 import edu.unimagdalena.reservasespacios.entities.Espacio;
 import edu.unimagdalena.reservasespacios.repositories.EspacioRepository;
-import lombok.RequiredArgsConstructor;
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.Mapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
