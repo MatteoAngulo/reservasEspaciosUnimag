@@ -31,8 +31,8 @@ public class Espacio {
     private Sede sede;
 
     @OneToMany(mappedBy = "espacio")
-    private List<Reserva> reservas;
-
-    @OneToMany(mappedBy = "espacio")
     private List<Problema> problemas;
+
+    @OneToOne(mappedBy = "espacio")
+    private HorarioEspacio horarioEspacio;
 }

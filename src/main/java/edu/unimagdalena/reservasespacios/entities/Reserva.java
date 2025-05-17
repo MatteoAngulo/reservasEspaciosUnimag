@@ -25,25 +25,17 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante")
     private Estudiante estudiante;
-
-    @ManyToOne
-    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario")
-    private Horario horario;
-
-    @ManyToOne
-    @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
-    private Espacio espacio;
     
     @OneToMany(mappedBy = "reserva")
     private List<HistorialReserva> historialReservas;
 
+    @OneToOne
+    @JoinColumn(name = "id_horario_espacio", referencedColumnName = "idHorarioEspacio")
+    private HorarioEspacio horarioEspacio;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private EstadoReserva estado;
-
-    @Column
-    @Future
-    private Date fecha;
+    private EstadoReserva estadoReserva;
 
     @Column
     @Size(min = 5, max = 1000)

@@ -21,11 +21,8 @@ public class Horario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHorario;
 
-    @OneToMany(mappedBy = "horario")
-    private List<Reserva> reservas;
-
-    @Column(nullable = false)
-    private Date fecha;
+    @OneToOne(mappedBy = "horario")
+    private HorarioEspacio horarioEspacio;
 
     @Column(nullable = false)
     private LocalTime horaInicio;
