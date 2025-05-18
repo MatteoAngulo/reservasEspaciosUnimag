@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /*
-findAll(), findById(ID id), save(T entity),
+findAll(), findById(ID id), save(T entity) para crearEspacio,
 deleteById(ID id), deleteAll(), count(), existsById(ID id),
 findAll(Pageable pageable) ← para paginación
 findAll(Sort sort) ← para ordenamiento
 */
 public interface EspacioRepository extends JpaRepository<Espacio, Long> {
-    //save para crearEspacio
+    @Query("SELECT e FROM Espacio e WHERE e. = :estado")
+    List<Espacio> findEspaciosPorEstado(@Param("estado") EstadoEspacio estado);
 }
