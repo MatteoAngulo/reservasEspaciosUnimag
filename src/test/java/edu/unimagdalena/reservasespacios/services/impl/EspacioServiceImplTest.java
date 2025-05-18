@@ -37,7 +37,7 @@ public class EspacioServiceImplTest {
                 .restricciones("no se juega después de 8").build();
 
         Espacio espacioMock = Espacio.builder()
-                .id(1L)
+                .idEspacio(1L)
                 .tipo("cancha")
                 .nombre("cancha 1")
                 .restricciones("no se juega después de 8").build();
