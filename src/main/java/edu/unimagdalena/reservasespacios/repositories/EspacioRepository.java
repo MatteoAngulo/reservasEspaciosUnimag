@@ -12,6 +12,5 @@ findAll(Pageable pageable) ← para paginación
 findAll(Sort sort) ← para ordenamiento
 */
 public interface EspacioRepository extends JpaRepository<Espacio, Long> {
-    @Query("SELECT e FROM Espacio e WHERE e. = :estado")
-    List<Espacio> findEspaciosPorEstado(@Param("estado") EstadoEspacio estado);
+
 }
