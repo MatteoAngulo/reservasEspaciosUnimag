@@ -1,6 +1,7 @@
 package edu.unimagdalena.reservasespacios.exceptions.handler;
 
 import edu.unimagdalena.reservasespacios.exceptions.HorarioConflictException;
+import edu.unimagdalena.reservasespacios.exceptions.HorarioSolapadoException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +72,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HorarioConflictException.class)
     public ResponseEntity<ApiError> handlerHorarioConflict(HorarioConflictException ex){
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(HorarioSolapadoException.class)
+    public ResponseEntity<ApiError> handlerHorarioSolapado(HorarioSolapadoException ex){
         ApiError apiError = ApiError.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())

@@ -1,9 +1,12 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
 import edu.unimagdalena.reservasespacios.dtos.mappers.HorarioEspacioMapper;
-import edu.unimagdalena.reservasespacios.dtos.requests.HorarioEspacioDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioSaveDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioUpdateEstadoDto;
 import edu.unimagdalena.reservasespacios.dtos.response.HorarioEspacioDtoResponse;
 import edu.unimagdalena.reservasespacios.entities.Espacio;
+import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
 import edu.unimagdalena.reservasespacios.entities.Horario;
 import edu.unimagdalena.reservasespacios.entities.HorarioEspacio;
 import edu.unimagdalena.reservasespacios.exceptions.HorarioSolapadoException;
@@ -31,7 +34,7 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
     private final EspacioRepository espacioRepository;
 
     @Override
-    public HorarioEspacioDtoResponse saveHorarioEspacio(HorarioEspacioDtoRequest horarioDto) {
+    public HorarioEspacioDtoResponse saveHorarioEspacio(HorarioEspacioSaveDtoRequest horarioDto) {
 
         Horario horario = horarioRepository.findById(horarioDto.idHorario())
                 .orElseThrow(() -> new HorarioNotFoundException("Horario con ID: "+horarioDto.idHorario() + " no encontrado"));
@@ -41,15 +44,16 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
         Espacio espacio = espacioRepository.findById(horarioDto.idEspacio())
                 .orElseThrow(() -> new EspacioNotFoundException("Espacio con ID: "+horarioDto.idEspacio() + " no encontrado"));
 
-        HorarioEspacio horarioEspacio = horarioEspacioMapper.toEntity(horarioDto);
+        HorarioEspacio horarioEspacio = horarioEspacioMapper.toEntitySave(horarioDto);
         horarioEspacio.setEspacio(espacio);
         horarioEspacio.setHorario(horario);
+        horarioEspacio.setEstadoEspacio(EstadoEspacio.DISPONIBLE);
 
         return horarioEspacioMapper.toHorarioEspacioDtoResponse(horarioEspacioRepository.save(horarioEspacio));
     }
 
     @Override
-    public List<HorarioEspacioDtoResponse> findHorariosEspacios() {
+    public List<HorarioEspacioDtoResponse> findAllHorariosEspacios() {
         return horarioEspacioRepository.findAll()
                 .stream()
                 .map(horarioEspacioMapper::toHorarioEspacioDtoResponse)
@@ -65,8 +69,8 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
     }
 
     @Override
-    public List<HorarioEspacioDtoResponse> findHorarioDisponibles(LocalDate fecha, Long idEspacio) {
-        return horarioEspacioRepository.findHorariosDisponibles(fecha, idEspacio)
+    public List<HorarioEspacioDtoResponse> findHorarioDisponiblesFechaYHora(LocalDate fecha, Long idEspacio) {
+        return horarioEspacioRepository.findHorariosDisponiblesPorFechaYEspacio(fecha, idEspacio)
                 .stream()
                 .map(horarioEspacioMapper::toHorarioEspacioDtoResponse)
                 .toList();
@@ -74,8 +78,38 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
 
     @Override
     public HorarioEspacioDtoResponse updateHorarioEspacio(Long id, HorarioEspacioDtoRequest horarioDto) {
-        return null;
+
+        HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(id)
+                .orElseThrow(() -> new HorarioEspacioNotFoundException("Espacio-horario con ID: "+id+" no encontrado"));
+
+        Horario horario = horarioRepository.findById(horarioDto.idHorario()).
+                orElseThrow(() -> new HorarioNotFoundException("Horario con ID: "+horarioDto.idHorario() + " no encontrado"));
+
+        validarSolapamiento(horarioDto.idEspacio(), horario.getHoraInicio(), horario.getHoraFin(), horarioDto.fecha());
+
+        Espacio espacio = espacioRepository.findById(horarioDto.idEspacio())
+                .orElseThrow(() -> new EspacioNotFoundException("Espacio con ID: "+horarioDto.idEspacio()+" no encontrado"));
+
+        horarioEspacio.setHorario(horario);
+        horarioEspacio.setEspacio(espacio);
+
+        horarioEspacioMapper.updateHorarioEspacioFromDto(horarioDto, horarioEspacio);
+
+        return horarioEspacioMapper.toHorarioEspacioDtoResponse(horarioEspacioRepository.save(horarioEspacio));
+
     }
+
+    @Override
+    public HorarioEspacioDtoResponse updateEstadoHorarioEspacio(Long id, HorarioEspacioUpdateEstadoDto estadoEspacio){
+
+        HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(id)
+                .orElseThrow(() -> new HorarioEspacioNotFoundException("Espacio-horario con ID: "+id+" no encontrado"));
+
+        horarioEspacio.setEstadoEspacio(estadoEspacio.estadoEspacio());
+
+        return horarioEspacioMapper.toHorarioEspacioDtoResponse(horarioEspacioRepository.save(horarioEspacio));
+    }
+
 
     @Override
     public void deleteHorarioEspacio(Long id) {

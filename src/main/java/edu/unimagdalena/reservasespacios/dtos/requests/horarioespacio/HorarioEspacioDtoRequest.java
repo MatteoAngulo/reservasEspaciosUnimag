@@ -1,4 +1,4 @@
-package edu.unimagdalena.reservasespacios.dtos.requests;
+package edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio;
 
 import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
 
