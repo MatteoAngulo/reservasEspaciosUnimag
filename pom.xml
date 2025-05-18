@@ -14,10 +14,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>edu.unimagdalena</groupId>
-    <artifactId>consultorioMedico</artifactId>
+    <artifactId>ReservasEspacios</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>consultorioMedico</name>
-    <description>consultorioMedico</description>
+    <name>ReservasEspacios</name>
+    <description>ReservasEspacios</description>
     <url/>
     <licenses>
         <license/>
