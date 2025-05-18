@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -36,5 +36,5 @@ public class HorarioEspacio {
 
     @Future
     @Column
-    private Date fecha;
+    private LocalDate fecha;
 }
