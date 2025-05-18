@@ -4,6 +4,7 @@ import edu.unimagdalena.reservasespacios.dtos.mappers.HorarioMapper;
 import edu.unimagdalena.reservasespacios.dtos.requests.HorarioDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.HorarioDtoResponse;
 import edu.unimagdalena.reservasespacios.entities.Horario;
+import edu.unimagdalena.reservasespacios.exceptions.HorarioConflictException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.HorarioNotFoundException;
 import edu.unimagdalena.reservasespacios.repositories.HorarioRepository;
 import edu.unimagdalena.reservasespacios.services.interfaces.HorarioService;
@@ -36,6 +37,15 @@ public class HorarioServiceImpl implements HorarioService {
     @Override
     public HorarioDtoResponse saveHorario(HorarioDtoRequest horarioDtoRequest) {
         Horario horario = horarioMapper.toEntity(horarioDtoRequest);
+
+        if(horario.getHoraFin().isBefore(horario.getHoraInicio())){
+            throw new IllegalArgumentException("La hora de fin no puede ser menor que la hora de inicio.");
+        }
+
+        if(horarioRepository.existsByHoraInicioAndHoraFin(horario.getHoraInicio(), horario.getHoraFin())){
+            throw new HorarioConflictException(horario.getHoraInicio(), horario.getHoraFin());
+        }
+
         return horarioMapper.toHorarioDtoResponse(horarioRepository.save(horario));
     }
 
@@ -43,6 +53,10 @@ public class HorarioServiceImpl implements HorarioService {
     public HorarioDtoResponse updateHorario(Long idHorario, HorarioDtoRequest horarioDtoRequest) {
         Horario horario = horarioRepository.findById(idHorario)
                 .orElseThrow(() -> new HorarioNotFoundException("Horario con ID: " + idHorario + " no encontrado."));
+
+        if(horarioDtoRequest.horaFin().isBefore(horarioDtoRequest.horaInicio())){
+            throw new IllegalArgumentException("La hora de fin no puede ser menor que la hora de inicio.");
+        }
 
         horario.setHoraInicio(horarioDtoRequest.horaInicio());
         horario.setHoraFin(horarioDtoRequest.horaFin());
