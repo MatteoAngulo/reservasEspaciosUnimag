@@ -1,11 +1,6 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
-import edu.unimagdalena.reservasespacios.dtos.mappers.HorarioMapper;
 import edu.unimagdalena.reservasespacios.dtos.requests.HorarioDtoRequest;
-import edu.unimagdalena.reservasespacios.dtos.response.HorarioDtoResponse;
-import edu.unimagdalena.reservasespacios.entities.Horario;
-import edu.unimagdalena.reservasespacios.repositories.HorarioRepository;
-import edu.unimagdalena.reservasespacios.services.interfaces.HorarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

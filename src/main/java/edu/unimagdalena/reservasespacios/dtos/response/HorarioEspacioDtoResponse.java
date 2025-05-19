@@ -2,7 +2,9 @@ package edu.unimagdalena.reservasespacios.dtos.response;
 
 import edu.unimagdalena.reservasespacios.enums.EstadoEspacio;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 
 public record HorarioEspacioDtoResponse(
@@ -10,6 +12,6 @@ public record HorarioEspacioDtoResponse(
         Long idHorario,
         Long idEspacio,
         EstadoEspacio estadoEspacio,
-        LocalDate fecha
+        List<DayOfWeek> listDias
 ) {
 }

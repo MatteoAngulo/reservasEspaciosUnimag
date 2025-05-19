@@ -2,7 +2,7 @@ package edu.unimagdalena.reservasespacios.services.interfaces;
 
 import edu.unimagdalena.reservasespacios.dtos.requests.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ReservaDtoResponse;
-import edu.unimagdalena.reservasespacios.entities.EstadoReserva;
+import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 
 import java.util.List;
 

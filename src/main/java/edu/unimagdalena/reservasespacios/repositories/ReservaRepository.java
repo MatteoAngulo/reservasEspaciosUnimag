@@ -1,6 +1,6 @@
 package edu.unimagdalena.reservasespacios.repositories;
 
-import edu.unimagdalena.reservasespacios.entities.EstadoReserva;
+import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 import edu.unimagdalena.reservasespacios.entities.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 
