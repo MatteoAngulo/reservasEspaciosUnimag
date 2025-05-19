@@ -12,5 +12,6 @@ public class EspacioDTOResquests {
     private String nombre;
     private String tipo;
     private String restricciones;
+    private Long sedeId;
 
 }
