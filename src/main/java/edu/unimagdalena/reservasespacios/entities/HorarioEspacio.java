@@ -1,5 +1,6 @@
 package edu.unimagdalena.reservasespacios.entities;
 
+import edu.unimagdalena.reservasespacios.enums.EstadoEspacio;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ public class HorarioEspacio {
     @Enumerated(EnumType.STRING)
     private EstadoEspacio estadoEspacio;
 
-    @Future
+    @Future // las validaciones se hacen en los dtos
     @Column
     private LocalDate fecha;
 }

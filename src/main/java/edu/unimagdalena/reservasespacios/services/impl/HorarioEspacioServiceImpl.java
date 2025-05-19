@@ -6,7 +6,7 @@ import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEsp
 import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioUpdateEstadoDto;
 import edu.unimagdalena.reservasespacios.dtos.response.HorarioEspacioDtoResponse;
 import edu.unimagdalena.reservasespacios.entities.Espacio;
-import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
+import edu.unimagdalena.reservasespacios.enums.EstadoEspacio;
 import edu.unimagdalena.reservasespacios.entities.Horario;
 import edu.unimagdalena.reservasespacios.entities.HorarioEspacio;
 import edu.unimagdalena.reservasespacios.exceptions.HorarioSolapadoException;

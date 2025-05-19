@@ -1,14 +1,13 @@
 package edu.unimagdalena.reservasespacios.entities;
 
+import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -16,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-
 public class Reserva {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

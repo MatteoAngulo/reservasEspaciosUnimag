@@ -1,5 +1,6 @@
 package edu.unimagdalena.reservasespacios.entities;
 
+import edu.unimagdalena.reservasespacios.enums.EstadoProblema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
