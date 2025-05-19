@@ -1,4 +1,5 @@
 package edu.unimagdalena.reservasespacios.entities;
+import edu.unimagdalena.reservasespacios.enums.TipoEspacio;
 import lombok.*;
 import jakarta.persistence.*;
 

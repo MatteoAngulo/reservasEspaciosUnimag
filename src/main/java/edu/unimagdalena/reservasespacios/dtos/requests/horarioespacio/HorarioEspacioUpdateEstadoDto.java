@@ -1,9 +1,7 @@
 package edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio;
 
-import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
-import lombok.Builder;
+import edu.unimagdalena.reservasespacios.enums.EstadoEspacio;
 
-@Builder
 public record HorarioEspacioUpdateEstadoDto(
         EstadoEspacio estadoEspacio
 ) {

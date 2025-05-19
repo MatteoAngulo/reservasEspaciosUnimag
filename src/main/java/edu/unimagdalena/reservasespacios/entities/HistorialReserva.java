@@ -1,5 +1,6 @@
 package edu.unimagdalena.reservasespacios.entities;
 
+import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 
 public class HistorialReserva {
+    //las validaciones se hacen en los dtos
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHistorial;

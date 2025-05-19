@@ -1,8 +1,10 @@
 package edu.unimagdalena.reservasespacios.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -11,17 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-
-
+@Data
 public class Estudiante extends Usuario {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEstudiante;
+
+    @NotNull
+    @Column(nullable = false, unique = true)
+    private Long codigoEstudiantil;
 
     @OneToMany(mappedBy = "estudiante")
     private List<Reserva> reservas;
-
-    @Override
-    public void iniciarSesion() {
-
-    }
 }
