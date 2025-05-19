@@ -120,7 +120,8 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
         horarioEspacioRepository.deleteById(id);
     }
 
-    private void validarSolapamiento(Long idEspacio, LocalTime nHoraIni, LocalTime nHoraFin, LocalDate fecha){
+    @Override
+    public void validarSolapamiento(Long idEspacio, LocalTime nHoraIni, LocalTime nHoraFin, LocalDate fecha){
         List<HorarioEspacio> horariosExistentes = horarioEspacioRepository.findHorariosExistentes(fecha, idEspacio);
         if(horariosExistentes.isEmpty()){
             return;

@@ -7,6 +7,7 @@ import edu.unimagdalena.reservasespacios.dtos.response.HorarioEspacioDtoResponse
 import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface HorarioEspacioService {
@@ -18,4 +19,6 @@ public interface HorarioEspacioService {
     HorarioEspacioDtoResponse updateHorarioEspacio(Long id, HorarioEspacioDtoRequest horarioDto);
     HorarioEspacioDtoResponse updateEstadoHorarioEspacio(Long id, HorarioEspacioUpdateEstadoDto estadoEspacio);
     void deleteHorarioEspacio(Long id);
+
+    void validarSolapamiento(Long idEspacio, LocalTime nHoraIni, LocalTime nHoraFin, LocalDate fecha);
 }
