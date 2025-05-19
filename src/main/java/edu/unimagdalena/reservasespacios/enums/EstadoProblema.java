@@ -1,4 +1,4 @@
-package edu.unimagdalena.reservasespacios.entities;
+package edu.unimagdalena.reservasespacios.enums;
 
 public enum EstadoProblema {
     PENDIENTE,

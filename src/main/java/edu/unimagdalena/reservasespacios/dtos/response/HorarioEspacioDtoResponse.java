@@ -1,6 +1,6 @@
 package edu.unimagdalena.reservasespacios.dtos.response;
 
-import edu.unimagdalena.reservasespacios.entities.EstadoEspacio;
+import edu.unimagdalena.reservasespacios.enums.EstadoEspacio;
 
 import java.time.LocalDate;
 

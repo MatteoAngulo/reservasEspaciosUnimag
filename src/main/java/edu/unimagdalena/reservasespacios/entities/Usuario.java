@@ -1,15 +1,22 @@
 package edu.unimagdalena.reservasespacios.entities;
 
-import jakarta.persistence.MappedSuperclass;
+import edu.unimagdalena.reservasespacios.enums.Rol;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @MappedSuperclass
+@Entity
 @Data
 @NoArgsConstructor
-public abstract class Usuario {
+public class Usuario {
+ // las validaciones se hacen en los dtos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     private String nombre;
@@ -20,9 +27,7 @@ public abstract class Usuario {
     @NotBlank
     private String contrasena;
 
-    @NotBlank
-    private String rol;
-
-    public abstract void iniciarSesion();
-
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 }
