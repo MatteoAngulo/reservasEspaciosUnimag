@@ -7,5 +7,4 @@ public enum TipoEspacio {
     SALONES,
     ZONAS_COMUNES,
     SALONES_AUDIVISUALES
-
 }
