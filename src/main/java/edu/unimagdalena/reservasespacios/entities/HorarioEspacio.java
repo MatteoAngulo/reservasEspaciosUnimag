@@ -8,7 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -22,10 +25,6 @@ public class HorarioEspacio {
     private Long idHorarioEspacio;
 
     @OneToOne
-    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario")
-    private Horario horario;
-
-    @OneToOne
     @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
     private Espacio espacio;
 
@@ -35,7 +34,13 @@ public class HorarioEspacio {
     @Enumerated(EnumType.STRING)
     private EstadoEspacio estadoEspacio;
 
-    @Future // las validaciones se hacen en los dtos
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private List<DayOfWeek> listaDias;
+
     @Column
-    private LocalDate fecha;
+    LocalTime horaInicio;
+
+    @Column
+    LocalTime horaFin;
 }
