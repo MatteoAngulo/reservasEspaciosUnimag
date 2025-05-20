@@ -1,8 +1,6 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioDtoRequest;
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioSaveDtoRequest;
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioUpdateEstadoDto;
+import edu.unimagdalena.reservasespacios.dtos.requests.HorarioEspacioDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.HorarioEspacioDtoResponse;
 import edu.unimagdalena.reservasespacios.services.interfaces.HorarioEspacioService;
 import lombok.RequiredArgsConstructor;

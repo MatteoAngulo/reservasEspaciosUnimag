@@ -1,12 +1,8 @@
 package edu.unimagdalena.reservasespacios.services.interfaces;
 
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioDtoRequest;
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioSaveDtoRequest;
-import edu.unimagdalena.reservasespacios.dtos.requests.horarioespacio.HorarioEspacioUpdateEstadoDto;
+import edu.unimagdalena.reservasespacios.dtos.requests.HorarioEspacioDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.HorarioEspacioDtoResponse;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 public interface HorarioEspacioService {

@@ -27,7 +27,7 @@ public class Reserva {
     @OneToMany(mappedBy = "reserva")
     private List<HistorialReserva> historialReservas;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_horario_espacio", referencedColumnName = "idHorarioEspacio")
     private HorarioEspacio horarioEspacio;
 
