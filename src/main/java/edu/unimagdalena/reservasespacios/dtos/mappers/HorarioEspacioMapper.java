@@ -15,4 +15,6 @@ public interface HorarioEspacioMapper {
 
     @Mapping(target = "espacio", ignore = true)
     HorarioEspacio toEntity(HorarioEspacioDtoRequest horarioEspacioDto);
+
+    void updateHorarioEspacioFromDto(HorarioEspacioDtoRequest horarioEspacioDto, @MappingTarget HorarioEspacio horarioEspacio);
 }

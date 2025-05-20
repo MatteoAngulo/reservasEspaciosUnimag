@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -34,6 +36,9 @@ public class Reserva {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoReserva estadoReserva;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
 
     @Column
     @Size(min = 5, max = 1000)
