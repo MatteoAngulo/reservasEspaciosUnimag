@@ -3,6 +3,12 @@ package edu.unimagdalena.reservasespacios.repositories;
 import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+import java.nio.channels.FileChannel;
+import java.util.Optional;
 
+public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+    Optional<Estudiante> findByCorreo(String correo);
+
+    Optional<Estudiante> findByCodigoEstudiantil(Long codigoEstudiantil);
+    void deleteByCorreo(String correo);
 }

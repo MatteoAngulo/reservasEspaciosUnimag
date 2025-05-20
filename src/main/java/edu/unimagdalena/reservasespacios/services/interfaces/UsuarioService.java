@@ -9,7 +9,8 @@ public interface UsuarioService {
 
     UsuarioDTOResponse saveUsuario(UsuarioDTOCreate usuario);
     UsuarioDTOResponse findUsuarioById(Long id);
-    List<UsuarioDTOResponse> getUsuarios();
+    UsuarioDTOResponse findUsuarioByCorreo(String correo);
+    List<UsuarioDTOResponse> findUsuarios();
     UsuarioDTOResponse updateUsuario(UsuarioDTOCreate usuario);
-    void deleteUsuario(Long id);
+    void deleteUsuario(String correo);
 }

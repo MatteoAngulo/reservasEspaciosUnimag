@@ -1,8 +1,8 @@
 package edu.unimagdalena.reservasespacios.dtos.requests.estudiante;
 
 public record EstudianteDTOUpdate(
-        String name,
-        String correo,
+        Long codigoEstudiantil,
+        String nombre,
         String contrasena
 ) {
 }

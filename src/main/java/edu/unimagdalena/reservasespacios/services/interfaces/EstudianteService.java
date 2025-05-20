@@ -10,8 +10,9 @@ public interface EstudianteService {
 
     EstudianteDTOResponse saveEstudiante(EstudianteDTOCreate estudiante);
     EstudianteDTOResponse findEstudianteById(Long id);
-    EstudianteDTOResponse getEstudiante(int codEstudiantil);
-    List<EstudianteDTOResponse> getEstudiantes();
+    EstudianteDTOResponse findEstudianteByCorreo(String correo);
+    EstudianteDTOResponse findEstudianteByCodigoEstudiantil(Long codEstudiantil);
+    List<EstudianteDTOResponse> findEstudiantes();
     EstudianteDTOResponse updateEstudiante(EstudianteDTOUpdate estudiante);
-    void deleteEstudiante(int codEstudiantil);
+    void deleteEstudiante(String correo);
 }

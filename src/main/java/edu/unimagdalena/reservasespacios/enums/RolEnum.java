@@ -1,6 +1,6 @@
 package edu.unimagdalena.reservasespacios.enums;
 
-public enum Rol {
+public enum RolEnum {
     ADMINISTRADOR,
     ESTUDIANTE
 }

@@ -1,11 +1,25 @@
 package edu.unimagdalena.reservasespacios.dtos.requests.usuario;
 
-import edu.unimagdalena.reservasespacios.enums.Rol;
+import edu.unimagdalena.reservasespacios.enums.RolEnum;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record UsuarioDTOCreate(
+        @NotBlank(message = "El nombre es obligatorio")
+        @Size(max = 150, message = "El nombre no debe superar los 100 caracteres")
         String nombre,
+
+        @NotBlank(message = "El correo es obligatorio")
+        @Email(message = "Debe ser un correo válido")
         String correo,
+
+        @NotBlank(message = "La contraseña es obligatoria")
+        @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
         String contrasena,
-        Rol rol
+
+        @NotNull(message = "El rol es obligatorio")
+        RolEnum rol
 ) {
 }

@@ -20,6 +20,6 @@ public class Estudiante extends Usuario {
     @Column(nullable = false, unique = true)
     private Long codigoEstudiantil;
 
-    @OneToMany(mappedBy = "estudiante")
+    @OneToMany(mappedBy = "estudiante",fetch = FetchType.LAZY)
     private List<Reserva> reservas;
 }
