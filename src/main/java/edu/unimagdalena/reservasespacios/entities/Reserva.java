@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,13 +29,16 @@ public class Reserva {
     @OneToMany(mappedBy = "reserva")
     private List<HistorialReserva> historialReservas;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_horario_espacio", referencedColumnName = "idHorarioEspacio")
     private HorarioEspacio horarioEspacio;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoReserva estadoReserva;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
 
     @Column
     @Size(min = 5, max = 1000)

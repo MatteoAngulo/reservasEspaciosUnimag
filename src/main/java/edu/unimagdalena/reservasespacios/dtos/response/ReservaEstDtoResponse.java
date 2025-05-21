@@ -1,15 +1,10 @@
 package edu.unimagdalena.reservasespacios.dtos.response;
 
-
-import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
-
 import java.time.LocalDate;
 
-public record ReservaDtoResponse(
+public record ReservaEstDtoResponse(
         Long idReserva,
-        Long idEstudiante,
         Long idHorarioEspacio,
-        EstadoReserva estadoReserva,
         LocalDate fecha,
         String motivo
 ) {
