@@ -1,9 +1,13 @@
 package edu.unimagdalena.reservasespacios.services.interfaces;
 
-import edu.unimagdalena.reservasespacios.dtos.requests.ReservaDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ReservaDtoResponse;
+import edu.unimagdalena.reservasespacios.dtos.response.ReservaEstDtoResponse;
 import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservaService {
@@ -11,11 +15,14 @@ public interface ReservaService {
     ReservaDtoResponse findReservaById(Long id);
     List<ReservaDtoResponse> findReservasPorEstudiante(Long idEstudiante);
     List<ReservaDtoResponse> findReservasPorEstado(EstadoReserva estado);
+    ReservaDtoResponse findReservaPorHorarioEspacioYFecha(LocalDate fecha, Long idHorarioEspacio);
 
-    ReservaDtoResponse updateReserva(Long id, ReservaDtoRequest reservaDto);
-    ReservaDtoResponse saveReserva(ReservaDtoRequest reservaDto);
+    ReservaDtoResponse updateReservaAdmin(Long idReserva, ReservaUpdateDtoRequest reservaDto);
+    ReservaDtoResponse saveReservaAdmin(ReservaDtoRequest reservaDto);
 
-    ReservaDtoResponse confirmarReserva(Long idReserva);
+    ReservaEstDtoResponse saveReservaEstudiante(ReservaEstDtoRequest dto, Long idEst);
+    ReservaEstDtoResponse updateReservaEstudiante(Long idReserva, ReservaEstDtoRequest dto);
+
     ReservaDtoResponse cancelarReserva(Long idReserva);
     ReservaDtoResponse aprobarReserva(Long idReserva);
     ReservaDtoResponse rechazarReserva(Long idReserva, String motivoRechazo);

@@ -1,7 +1,11 @@
 package edu.unimagdalena.reservasespacios.exceptions.handler;
 
+import edu.unimagdalena.reservasespacios.entities.Problema;
+import edu.unimagdalena.reservasespacios.entities.Reserva;
 import edu.unimagdalena.reservasespacios.exceptions.HorarioSolapadoException;
 import edu.unimagdalena.reservasespacios.exceptions.HorasConflictException;
+import edu.unimagdalena.reservasespacios.exceptions.ProblemaEstadoReservaException;
+import edu.unimagdalena.reservasespacios.exceptions.ReservaExistenteException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,4 +97,29 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(ReservaExistenteException.class)
+    public ResponseEntity<ApiError> handlerReservaExistente(ReservaExistenteException ex){
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ProblemaEstadoReservaException.class)
+    public ResponseEntity<ApiError> handlerProblemaEstadoReserva(ProblemaEstadoReservaException ex){
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
 }

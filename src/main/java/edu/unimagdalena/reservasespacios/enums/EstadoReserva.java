@@ -3,5 +3,6 @@ package edu.unimagdalena.reservasespacios.enums;
 public enum EstadoReserva {
     PENDIENTE,
     APROBADO,
-    RECHAZADO
+    RECHAZADO,
+    CANCELADA
 }
