@@ -1,11 +1,6 @@
 package edu.unimagdalena.reservasespacios.exceptions.handler;
 
-import edu.unimagdalena.reservasespacios.entities.Problema;
-import edu.unimagdalena.reservasespacios.entities.Reserva;
-import edu.unimagdalena.reservasespacios.exceptions.HorarioSolapadoException;
-import edu.unimagdalena.reservasespacios.exceptions.HorasConflictException;
-import edu.unimagdalena.reservasespacios.exceptions.ProblemaEstadoReservaException;
-import edu.unimagdalena.reservasespacios.exceptions.ReservaExistenteException;
+import edu.unimagdalena.reservasespacios.exceptions.*;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +33,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserAlreadyExists.class)
+    public ResponseEntity<ApiError> handleUserAlreadyExists(UserAlreadyExists userAlreadyExists) {
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(userAlreadyExists.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException ex) {
         ApiError apiError = ApiError.builder()
@@ -47,7 +54,7 @@ public class GlobalExceptionHandler {
                 .errors(null)
                 .build();
 
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
