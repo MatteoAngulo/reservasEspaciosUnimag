@@ -12,7 +12,7 @@ public interface EspacioMapper {
 
     EspacioDTOResponse espacioToDTO(Espacio espacio);
 
-    @Mapping(target = "id", ignore = true )
+    @Mapping(target = "idEspacio", ignore = true )
     //@Mapping(target = "sede", ignore = true )
     Espacio dtoToEspacio(EspacioDTOResquests espacioDTO);
 

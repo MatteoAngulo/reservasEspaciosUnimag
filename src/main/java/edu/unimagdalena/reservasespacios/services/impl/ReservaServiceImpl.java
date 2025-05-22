@@ -225,7 +225,7 @@ public class ReservaServiceImpl implements ReservaService {
 
         historialReservaService.registrarCambioReserva(
                 reservaAprobada,
-                EstadoReserva.CANCELADA,
+                EstadoReserva.APROBADO,
                 "Reserva aprobada");
 
         return reservaMapper.toReservaDtoResponse(reservaAprobada);
@@ -241,16 +241,16 @@ public class ReservaServiceImpl implements ReservaService {
             throw new ProblemaEstadoReservaException("No puede rechazar una reserva en estado diferente a PENDIENTE");
         }
 
-        reserva.setEstadoReserva(EstadoReserva.APROBADO);
+        reserva.setEstadoReserva(EstadoReserva.RECHAZADO);
 
-        Reserva reservaAprobada = reservaRepository.save(reserva);
+        Reserva reservaRechazada = reservaRepository.save(reserva);
 
         historialReservaService.registrarCambioReserva(
-                reservaAprobada,
-                EstadoReserva.CANCELADA,
-                "Reserva aprobada");
+                reservaRechazada,
+                EstadoReserva.RECHAZADO,
+                motivoRechazo);
 
-        return reservaMapper.toReservaDtoResponse(reservaAprobada);
+        return reservaMapper.toReservaDtoResponse(reservaRechazada);
     }
 
     private void validarReservaDisponible(LocalDate fecha, Long idHorarioEspacio){

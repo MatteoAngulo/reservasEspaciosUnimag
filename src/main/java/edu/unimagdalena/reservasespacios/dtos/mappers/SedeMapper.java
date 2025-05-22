@@ -21,7 +21,7 @@ public interface SedeMapper {
     SedeDtoResponse sedeToDto(Sede sede);
 
     //DTO Request → Entidad
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "sedeId", ignore = true)
     @Mapping(target = "espacios", ignore = true)
     Sede dtoToSede(SedeDtoRequest dto);
 
