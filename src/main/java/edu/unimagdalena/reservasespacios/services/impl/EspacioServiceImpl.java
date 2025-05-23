@@ -90,5 +90,19 @@ public class EspacioServiceImpl implements EspacioService {
         repository.deleteById(idEspacio);
     }
 
+    @Override
+    public List<EspacioDTOResponse> findEspaciosBySede(Long sedeId) {
+        // 1) Validar que la sede exista
+        sedeRepository.findById(sedeId)
+                .orElseThrow(() ->
+                        new SedeNotFoundException("Sede con ID " + sedeId + " no encontrada")
+                );
+        // 2) Traer y mapear
+        return repository.findBySede_SedeId(sedeId)
+                .stream()
+                .map(mapper::espacioToDTO)
+                .toList();
+    }
+
 
 }
