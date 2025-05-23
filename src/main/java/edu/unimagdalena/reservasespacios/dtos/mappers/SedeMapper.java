@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 public interface SedeMapper {
 
     //Entidad → DTO Response
-    @Mapping(target = "espacioIds",
+    /*@Mapping(target = "espacioIds",
             expression = "java(sede.getEspacios() == null ? null : " +
                     "sede.getEspacios().stream()" +
                     ".map(e -> e.getIdEspacio())" +
-                    ".collect(Collectors.toList()))")
+                    ".collect(Collectors.toList()))")*/
     SedeDtoResponse sedeToDto(Sede sede);
 
     //DTO Request → Entidad
@@ -29,7 +29,7 @@ public interface SedeMapper {
      * Actualiza una entidad existente desde los datos del DTO.
      * Sólo nombre se copiará (espacios e id se dejan intactos).
      */
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "espacios", ignore = true)
+   /* @Mapping(target = "id", ignore = true)
+    @Mapping(target = "espacios", ignore = true)*/
     void updateSedeFromDto(SedeDtoRequest dto, @MappingTarget Sede sede);
 }

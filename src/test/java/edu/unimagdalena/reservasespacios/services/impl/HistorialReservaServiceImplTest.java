@@ -5,6 +5,7 @@ import edu.unimagdalena.reservasespacios.dtos.response.HistorialReservaDtoRespon
 import edu.unimagdalena.reservasespacios.entities.HistorialReserva;
 import edu.unimagdalena.reservasespacios.entities.Reserva;
 import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
+import edu.unimagdalena.reservasespacios.exceptions.notFound.HistorialNotFoundException;
 import edu.unimagdalena.reservasespacios.repositories.HistorialReservaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -82,10 +85,39 @@ class HistorialReservaServiceImplTest {
     }
 
     @Test
-    void findHistorialById() {
+    void testFindHistorialById_Exists() {
+        when(repositorio.findById(1L)).thenReturn(Optional.of(historial));
+        when(mapper.toDtoResponse(historial)).thenReturn(historialDto);
+
+        HistorialReservaDtoResponse result = servicio.findHistorialById(1L);
+
+        assertNotNull(result);
+        assertEquals(historialDto.idHistorial(), result.idHistorial());
+        verify(repositorio).findById(1L);
+        verify(mapper).toDtoResponse(historial);
     }
 
     @Test
-    void findAllHistorial() {
+    void testFindHistorialById_NotFound() {
+        when(repositorio.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(HistorialNotFoundException.class, () -> {
+            servicio.findHistorialById(99L);
+        });
+
+        verify(repositorio).findById(99L);
+    }
+
+    @Test
+    void testFindAllHistorial() {
+        when(repositorio.findAll()).thenReturn(List.of(historial));
+        when(mapper.toDtoResponse(historial)).thenReturn(historialDto);
+
+        List<HistorialReservaDtoResponse> result = servicio.findAllHistorial();
+
+        assertEquals(1, result.size());
+        assertEquals(historialDto.idHistorial(), result.get(0).idHistorial());
+        verify(repositorio).findAll();
+        verify(mapper).toDtoResponse(historial);
     }
 }

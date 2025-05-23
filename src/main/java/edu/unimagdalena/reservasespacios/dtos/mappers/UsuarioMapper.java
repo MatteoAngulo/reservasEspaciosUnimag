@@ -11,5 +11,7 @@ public interface UsuarioMapper {
 
     @Mapping(source = "rol", target = "rol", ignore = true)
     Usuario CreateDTOToUsuario(UsuarioDTOCreate usuarioDTOCreate);
+
+    
     UsuarioDTOResponse UsuarioToDTOResponse(Usuario usuario);
 }
