@@ -11,5 +11,7 @@ public interface UsuarioMapper {
 
     @Mapping(source = "rol", target = "rol", ignore = true)
     Usuario CreateDTOToUsuario(UsuarioDTOCreate usuarioDTOCreate);
+
+    @Mapping(source = "rol.rolEnum", target = "rol")
     UsuarioDTOResponse UsuarioToDTOResponse(Usuario usuario);
 }
