@@ -63,9 +63,9 @@ public class EstudianteController {
     }
 
     @DeleteMapping("/borrar")
-    public ResponseEntity<Void> borrarEstudiante(@RequestParam @NotBlank(message = "El correo no puede estar vacio")
-                                                     String correo ) {
-        estudianteService.deleteEstudiante(correo);
+    public ResponseEntity<Void> borrarEstudiante(@RequestParam @NotBlank(message = "El codigo no puede estar vacio")
+                                                     Long codigo ) {
+        estudianteService.deleteEstudiante(codigo);
         return ResponseEntity.noContent().build();
     }
 

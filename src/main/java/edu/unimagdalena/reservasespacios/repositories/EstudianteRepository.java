@@ -7,8 +7,6 @@ import java.nio.channels.FileChannel;
 import java.util.Optional;
 
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
-    Optional<Estudiante> findByCorreo(String correo);
-
     Optional<Estudiante> findByCodigoEstudiantil(Long codigoEstudiantil);
-    void deleteByCorreo(String correo);
+    void deleteByCodigo(Long codigo);
 }

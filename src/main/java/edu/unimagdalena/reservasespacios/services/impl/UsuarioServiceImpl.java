@@ -60,9 +60,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTOResponse updateUsuario(UsuarioDTOCreate usuario) {
         Usuario usuarioToUpdate = usuarioRepository.findByCorreo(usuario.correo()).orElseThrow(
                 () -> new UsuarioNotFoundException("El usuario con el correo " + usuario.correo() + " no existe."));
-        usuarioToUpdate.setNombre(usuario.nombre());
         usuarioToUpdate.setContrasena(usuario.contrasena());
-        usuarioToUpdate.setRol(rolRepository.findByRol(usuario.rol()));
+        usuarioToUpdate.setRol(rolRepository.findByRol(usuario.rol()).get());
         return usuarioMapper.UsuarioToDTOResponse(usuarioRepository.save(usuarioToUpdate));
     }
 

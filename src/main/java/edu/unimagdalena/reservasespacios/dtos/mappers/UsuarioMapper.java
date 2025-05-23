@@ -4,10 +4,12 @@ import edu.unimagdalena.reservasespacios.dtos.requests.usuario.UsuarioDTOCreate;
 import edu.unimagdalena.reservasespacios.dtos.response.UsuarioDTOResponse;
 import edu.unimagdalena.reservasespacios.entities.Usuario;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
+    @Mapping(source = "rol", target = "rol", ignore = true)
     Usuario CreateDTOToUsuario(UsuarioDTOCreate usuarioDTOCreate);
     UsuarioDTOResponse UsuarioToDTOResponse(Usuario usuario);
 }

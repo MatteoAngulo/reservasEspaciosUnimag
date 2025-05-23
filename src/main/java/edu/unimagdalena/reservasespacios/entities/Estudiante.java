@@ -14,11 +14,20 @@ import java.util.List;
 @Entity
 @Builder
 @Data
-public class Estudiante extends Usuario {
+public class Estudiante {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idEstudiante;
 
     @NotNull
     @Column(nullable = false, unique = true)
     private Long codigoEstudiantil;
+    private String nombre;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "usuarioId")
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "estudiante",fetch = FetchType.LAZY)
     private List<Reserva> reservas;
