@@ -10,7 +10,6 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface SedeMapper {
-
     // Entidad → DTO Response: id y name se mapean automáticamente
     @Mapping(source = "sedeId", target = "id")
     SedeDtoResponse sedeToDto(Sede sede);

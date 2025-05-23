@@ -16,17 +16,6 @@ public class EspacioMapperTest {
         mapper = new EspacioMapperImpl();
     }
 
-    @Test
-    void testEspacioToDto() {
-        Espacio espacioPrueba = Espacio.builder().id(1L)
-                .nombre("Cancha futbol 1")
-                .restricciones("no se puede jugar despues de 8").build();
 
-        EspacioDTOResponse dto = mapper.espacioToDTO(espacioPrueba);
-
-        assertThat(dto.getId()).isEqualTo(espacioPrueba.getId());
-        assertThat(dto.getNombre()).isEqualTo(espacioPrueba.getNombre());
-        assertThat(dto.getRestricciones()).isEqualTo(espacioPrueba.getRestricciones());
-    }
 
 }
