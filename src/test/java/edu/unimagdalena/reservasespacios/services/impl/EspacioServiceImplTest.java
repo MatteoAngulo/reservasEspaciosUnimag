@@ -28,41 +28,7 @@ public class EspacioServiceImplTest {
     public EspacioServiceImplTest(){
         MockitoAnnotations.openMocks(this);
     }
-/*
-    @Test
-    void CrearEspacio(){
-        EspacioDTOResquests espacioDTO = EspacioDTOResquests.builder()
-                .tipo("cancha")
-                .nombre("cancha 1")
-                .restricciones("no se juega después de 8").build();
 
-        Espacio espacioMock = Espacio.builder()
-                .idEspacio(1L)
-                .tipo("cancha")
-                .nombre("cancha 1")
-                .restricciones("no se juega después de 8").build();
 
-        EspacioDTOResponse expectedResponse = EspacioDTOResponse.builder()
-                .id(1L)
-                .tipo("cancha")
-                .nombre("cancha 1")
-                .restricciones("no se juega después de 8").build();
 
-        when(mapper.dtoToEspacio(espacioDTO)).thenReturn(espacioMock);
-        when(repositorio.save(espacioMock)).thenReturn(espacioMock);
-        when(mapper.espacioToDTO(espacioMock)).thenReturn(expectedResponse);
-
-        EspacioDTOResponse dtoResponse = espacioService.crearEspacio(espacioDTO);
-
-        assertNotNull(dtoResponse);
-        assertThat(dtoResponse.getId()).isNotNull();
-        assertThat(dtoResponse.getTipo()).isEqualTo(espacioDTO.getTipo());
-        assertThat(dtoResponse.getNombre()).isEqualTo(espacioDTO.getNombre());
-        assertThat(dtoResponse.getRestricciones()).isEqualTo(espacioDTO.getRestricciones());
-
-        verify(mapper).dtoToEspacio(espacioDTO);
-        verify(repositorio, times(1)).save(espacioMock);
-        verify(mapper).espacioToDTO(espacioMock);
-    }
-*/
 }

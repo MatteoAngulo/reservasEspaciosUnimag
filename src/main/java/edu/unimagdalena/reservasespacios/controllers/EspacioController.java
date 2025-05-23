@@ -46,6 +46,10 @@ public class EspacioController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @GetMapping("/sede/{sedeId}")
+    public ResponseEntity<List<EspacioDTOResponse>> listarPorSede(@PathVariable Long sedeId){
+        List<EspacioDTOResponse> list = service.findEspaciosBySede(sedeId);
+        return ResponseEntity.ok(list);
+    }
 
 }

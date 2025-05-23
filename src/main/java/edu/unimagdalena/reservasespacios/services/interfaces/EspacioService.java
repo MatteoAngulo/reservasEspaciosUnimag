@@ -14,4 +14,5 @@ public interface EspacioService {
     EspacioDTOResponse findEspacioById(Long idEspacio);
     EspacioDTOResponse updateEspacio(Long idEspacio, EspacioDTOResquests espacioDTO);
     void deleteEspacio(Long idEspacio);
+    List<EspacioDTOResponse> findEspaciosBySede(Long sedeId);
 }
