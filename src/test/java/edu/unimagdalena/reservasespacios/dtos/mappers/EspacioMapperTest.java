@@ -10,23 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EspacioMapperTest {
     private EspacioMapper mapper;
-/*
+
     @BeforeEach
     void setUp() {
         mapper = new EspacioMapperImpl();
     }
 
-    @Test
-    void testEspacioToDto() {
-        Espacio espacioPrueba = Espacio.builder().idEspacio(1L)
-                .correo("Cancha futbol 1")
-                .restricciones("no se puede jugar despues de 8").build();
 
-        EspacioDTOResponse dto = mapper.espacioToDTO(espacioPrueba);
 
-        assertThat(dto.getId()).isEqualTo(espacioPrueba.getId());
-        assertThat(dto.getNombre()).isEqualTo(espacioPrueba.getNombre());
-        assertThat(dto.getRestricciones()).isEqualTo(espacioPrueba.getRestricciones());
-    }
-*/
 }

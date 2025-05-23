@@ -9,7 +9,6 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface EspacioMapper {
-
     /**
      * Request DTO → Entidad
      * - Ignora el ID que se genera en BD
