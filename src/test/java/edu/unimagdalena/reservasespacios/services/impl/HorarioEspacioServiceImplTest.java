@@ -219,15 +219,12 @@ class HorarioEspacioServiceImplTest {
         when(repository.save(horarioEspacio1)).thenReturn(horarioEspacio1);
         when(mapper.toDtoResponse(horarioEspacio1)).thenReturn(dtoResponse1);
 
-        // Act
         HorarioEspacioDtoResponse resultado = servicio.updateHorarioEspacio(id, dtoRequest);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(dtoResponse1.idHorarioEspacio(), resultado.idHorarioEspacio());
         assertEquals(dtoResponse1.dia(), resultado.dia());
 
-        // Verificaciones
         verify(repository).findById(id);
         verify(mapper).updateHorarioEspacioFromDto(dtoRequest, horarioEspacio1);
         verify(repository).save(horarioEspacio1);

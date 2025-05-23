@@ -23,7 +23,7 @@ public interface ReservaService {
     ReservaEstDtoResponse saveReservaEstudiante(ReservaEstDtoRequest dto, Long idEst);
     ReservaEstDtoResponse updateReservaEstudiante(Long idReserva, ReservaEstDtoRequest dto);
 
-    ReservaDtoResponse cancelarReserva(Long idReserva);
+    ReservaDtoResponse cancelarReserva(Long idReserva, String motivo);
     ReservaDtoResponse aprobarReserva(Long idReserva);
     ReservaDtoResponse rechazarReserva(Long idReserva, String motivoRechazo);
 

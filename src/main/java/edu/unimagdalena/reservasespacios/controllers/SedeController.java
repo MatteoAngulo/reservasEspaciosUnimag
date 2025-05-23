@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -18,7 +19,9 @@ public class SedeController {
 
     private final SedeService sedeService;
 
+
     @PostMapping
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<SedeDtoResponse> createSede(@RequestBody @Valid SedeDtoRequest dto) {
         SedeDtoResponse created = sedeService.saveSede(dto);
         return ResponseEntity
@@ -27,18 +30,21 @@ public class SedeController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<SedeDtoResponse>> getAllSedes() {
         List<SedeDtoResponse> list = sedeService.findAllSedes();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<SedeDtoResponse> getSedeById(@PathVariable("id") Long id) {
         SedeDtoResponse sede = sedeService.findSedeById(id);
         return ResponseEntity.ok(sede);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<SedeDtoResponse> updateSede(
             @PathVariable("id") Long id,
             @RequestBody @Valid SedeDtoRequest dto) {
@@ -47,6 +53,7 @@ public class SedeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> deleteSede(@PathVariable("id") Long id) {
         sedeService.deleteSede(id);
         return ResponseEntity.noContent().build();
