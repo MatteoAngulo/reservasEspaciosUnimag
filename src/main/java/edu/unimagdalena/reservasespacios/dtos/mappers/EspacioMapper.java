@@ -30,7 +30,7 @@ public interface EspacioMapper {
     /**
      * Actualiza campos de la entidad desde el DTO:
      * - Mantiene idEspacio y la relación Sede intactos
-     * - Copia correo, tipo, restricciones y disponible
+     * - Copia nombre, tipo, restricciones y disponible
      */
     @Mapping(target = "idEspacio", ignore = true)
     @Mapping(target = "sede",       ignore = true)
