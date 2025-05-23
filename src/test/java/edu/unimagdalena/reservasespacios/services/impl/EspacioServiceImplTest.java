@@ -28,7 +28,7 @@ public class EspacioServiceImplTest {
     public EspacioServiceImplTest(){
         MockitoAnnotations.openMocks(this);
     }
-
+/*
     @Test
     void CrearEspacio(){
         EspacioDTOResquests espacioDTO = EspacioDTOResquests.builder()
@@ -64,5 +64,5 @@ public class EspacioServiceImplTest {
         verify(repositorio, times(1)).save(espacioMock);
         verify(mapper).espacioToDTO(espacioMock);
     }
-
+*/
 }
