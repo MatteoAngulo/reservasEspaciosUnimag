@@ -25,7 +25,7 @@ public interface EspacioMapper {
      * - Extrae sede.id → idSede
      */
     @Mapping(source = "idEspacio", target = "id")
-    @Mapping(source = "sede.id",    target = "idSede")
+    @Mapping(source = "sede.sedeId",    target = "idSede")
     EspacioDTOResponse espacioToDTO(Espacio entidad);
 
     /**
