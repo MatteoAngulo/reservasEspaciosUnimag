@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class ProblemaController {
     private final ProblemaService problemaService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<ProblemaDtoResponse> crearProblema(@RequestBody @Valid ProblemaDtoRequest dto){
         ProblemaDtoResponse created = problemaService.saveProblema(dto);
         return ResponseEntity
@@ -27,18 +30,21 @@ public class ProblemaController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<ProblemaDtoResponse>> listarProblemas(){
         List<ProblemaDtoResponse> list = problemaService.findAllProblemas();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<ProblemaDtoResponse> obtenerProblema(@PathVariable("id") Long id){
         ProblemaDtoResponse resp = problemaService.findProblemaById(id);
         return ResponseEntity.ok(resp);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ProblemaDtoResponse> actualizarProblema(@PathVariable("id") Long id,
             @RequestBody @Valid ProblemaDtoRequest dto){
         ProblemaDtoResponse updated = problemaService.updateProblema(id, dto);
@@ -46,6 +52,7 @@ public class ProblemaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> eliminarProblema(@PathVariable("id") Long id){
         problemaService.deleteProblema(id);
         return ResponseEntity.noContent().build();
