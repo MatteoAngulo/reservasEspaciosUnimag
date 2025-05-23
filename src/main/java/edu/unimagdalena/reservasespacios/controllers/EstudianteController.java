@@ -37,19 +37,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteService.findEstudianteById(id));
     }
 
-    @GetMapping("/por-correo")
-    public ResponseEntity<EstudianteDTOResponse> findEstudianteByCorreo(@RequestParam
-                                                                        @NotBlank(message = "El correo no puede esta vacio")
-                                                                        String correo) {
-        return ResponseEntity.ok(estudianteService.findEstudianteByCorreo(correo));
-    }
-
     @GetMapping("/por-codigo")
     public ResponseEntity<EstudianteDTOResponse> findEstudianteByCodigo(@RequestParam
                                                                         @NotNull(message = "El codigo no puede estar vacio")
                                                                         @Positive(message = "El codigo no puede ser negativo")
-                                                                        String correo) {
-        return ResponseEntity.ok(estudianteService.findEstudianteByCorreo(correo));
+                                                                        Long codigo) {
+        return ResponseEntity.ok(estudianteService.findEstudianteByCodigoEstudiantil(codigo));
     }
 
     @GetMapping("/todos")
@@ -63,9 +56,9 @@ public class EstudianteController {
     }
 
     @DeleteMapping("/borrar")
-    public ResponseEntity<Void> borrarEstudiante(@RequestParam @NotBlank(message = "El correo no puede estar vacio")
-                                                     String correo ) {
-        estudianteService.deleteEstudiante(correo);
+    public ResponseEntity<Void> borrarEstudiante(@RequestParam @NotBlank(message = "El codigo no puede estar vacio")
+                                                     Long codigo ) {
+        estudianteService.deleteEstudiante(codigo);
         return ResponseEntity.noContent().build();
     }
 

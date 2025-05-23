@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ReservaMapper {
 
-    @Mapping(source = "estudiante.usuarioId", target = "idEstudiante")
+    @Mapping(source = "estudiante.idEstudiante", target = "idEstudiante")
     @Mapping(source = "horarioEspacio.idHorarioEspacio", target = "idHorarioEspacio")
     ReservaDtoResponse toReservaDtoResponse(Reserva reserva);
 
