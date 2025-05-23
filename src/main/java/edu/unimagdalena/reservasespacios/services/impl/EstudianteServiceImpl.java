@@ -86,7 +86,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     @Override
-    public void deleteEstudiante(Long codigo) {
+    public void deleteEstudianteByCodigo(Long codigo) {
         if (estudianteRepository.findByCodigoEstudiantil(codigo).isPresent()) {
             estudianteRepository.deleteByCodigo(codigo);
         }else{

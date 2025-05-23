@@ -29,7 +29,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTOResponse> obtenerUsuario(@PathVariable
+    public ResponseEntity<UsuarioDTOResponse> obtenerUsuarioPorId(@PathVariable
                                                  @NotNull(message = "El id no puede ser nulo")
                                                  @Positive(message = "El id debe ser positivo")
                                                  Long id){
@@ -49,7 +49,7 @@ public class UsuarioController {
 
     @PutMapping("/actualizar")
     public ResponseEntity<UsuarioDTOResponse> actualizarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate){
-        return ResponseEntity.ok(usuarioService.saveUsuario(usuarioDTOCreate));
+        return ResponseEntity.ok(usuarioService.updateUsuario(usuarioDTOCreate));
     }
 
     @DeleteMapping("/borrar")

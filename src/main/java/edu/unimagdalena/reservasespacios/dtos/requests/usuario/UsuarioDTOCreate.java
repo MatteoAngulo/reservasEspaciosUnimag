@@ -10,10 +10,6 @@ import lombok.Builder;
 @Builder
 public record UsuarioDTOCreate(
         @NotBlank(message = "El correo es obligatorio")
-        @Size(max = 150, message = "El correo no debe superar los 100 caracteres")
-        String nombre,
-
-        @NotBlank(message = "El correo es obligatorio")
         @Email(message = "Debe ser un correo válido")
         String correo,
 

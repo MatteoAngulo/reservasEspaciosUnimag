@@ -24,7 +24,7 @@ public class EstudianteController {
 
     private final EstudianteService estudianteService;
 
-    @PostMapping("/registrar")
+    @PostMapping("/register")
     public ResponseEntity<EstudianteDTOResponse> registrarEstudiante(@RequestBody @Valid EstudianteDTOCreate estudianteDTOCreate) {
         return new ResponseEntity<>(estudianteService.saveEstudiante(estudianteDTOCreate), HttpStatus.CREATED);
     }
@@ -56,9 +56,11 @@ public class EstudianteController {
     }
 
     @DeleteMapping("/borrar")
-    public ResponseEntity<Void> borrarEstudiante(@RequestParam @NotBlank(message = "El codigo no puede estar vacio")
-                                                     Long codigo ) {
-        estudianteService.deleteEstudiante(codigo);
+    public ResponseEntity<Void> borrarEstudiante(@RequestParam
+                                                 @NotNull(message = "El codigo no puede estar vacio")
+                                                 @Positive(message = "El codigo debe ser positivo")
+                                                 Long codigo) {
+        estudianteService.deleteEstudianteByCodigo(codigo);
         return ResponseEntity.noContent().build();
     }
 

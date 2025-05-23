@@ -13,5 +13,5 @@ public interface EstudianteService {
     EstudianteDTOResponse findEstudianteByCodigoEstudiantil(Long codEstudiantil);
     List<EstudianteDTOResponse> findEstudiantes();
     EstudianteDTOResponse updateEstudiante(EstudianteDTOUpdate estudiante);
-    void deleteEstudiante(Long codigo);
+    void deleteEstudianteByCodigo(Long codigo);
 }

@@ -154,9 +154,9 @@ class EstudianteServiceImplTest {
     }
 
     @Test
-    void deleteEstudiante() {
+    void deleteEstudianteByCodigo() {
         when(estudianteRepository.findByCodigoEstudiantil(anyLong())).thenReturn(Optional.of(estudiante1));
         doNothing().when(estudianteRepository).deleteByCodigo(anyLong());
-        estudianteService.deleteEstudiante(1L);
+        estudianteService.deleteEstudianteByCodigo(1L);
     }
 }
