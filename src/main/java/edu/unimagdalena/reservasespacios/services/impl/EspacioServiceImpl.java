@@ -28,8 +28,8 @@ public class EspacioServiceImpl implements EspacioService {
         Espacio nuevo = mapper.dtoToEspacio(espacioDTO);
 
         // 1) cargar la sede o lanzar excepción si no existe
-        Sede sede = sedeRepository.findById(espacioDTO.getSedeId())
-                .orElseThrow(() -> new SedeNotFoundException("Sede con ID " + espacioDTO.getSedeId() + " no encontrada"));
+        Sede sede = sedeRepository.findById(espacioDTO.idSede())
+                .orElseThrow(() -> new SedeNotFoundException("Sede con ID " + espacioDTO.idSede() + " no encontrada"));
         // 2) asignarla
         nuevo.setSede(sede);
 
@@ -67,12 +67,12 @@ public class EspacioServiceImpl implements EspacioService {
         mapper.updateEspacioFromRequestDTO(espacioDTO, existente);
 
         // 3) si cambiaron de sede, recargarla
-        if (espacioDTO.getSedeId() != null &&
-                (existente.getSede() == null || !existente.getSede().getId().equals(espacioDTO.getSedeId()))) {
+        if (espacioDTO.idSede() != null &&
+                (existente.getSede() == null || !existente.getSede().getSedeId().equals(espacioDTO.idSede()))) {
 
-            Sede nueva = sedeRepository.findById(espacioDTO.getSedeId())
+            Sede nueva = sedeRepository.findById(espacioDTO.idSede())
                     .orElseThrow(() ->
-                            new SedeNotFoundException("Sede con ID " + espacioDTO.getSedeId() + " no encontrada")
+                            new SedeNotFoundException("Sede con ID " + espacioDTO.idSede() + " no encontrada")
                     );
             existente.setSede(nueva);
         }

@@ -6,5 +6,7 @@ public record EspacioDTOResponse (
         Long id,
         String nombre,
         String tipo,
-        String restricciones
+        String restricciones,
+        Long idSede,
+        Boolean disponible
 ){}

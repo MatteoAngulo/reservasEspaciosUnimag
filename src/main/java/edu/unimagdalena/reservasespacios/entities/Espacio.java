@@ -27,6 +27,9 @@ public class Espacio {
     @Column
     private String restricciones;
 
+    @Column
+    private Boolean disponible;
+
     @ManyToOne
     @JoinColumn(name = "id_sede", referencedColumnName = "id")
     private Sede sede;
