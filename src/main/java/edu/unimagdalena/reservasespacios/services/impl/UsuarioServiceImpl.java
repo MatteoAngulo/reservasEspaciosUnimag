@@ -5,6 +5,7 @@ import edu.unimagdalena.reservasespacios.dtos.requests.usuario.UsuarioDTOCreate;
 import edu.unimagdalena.reservasespacios.dtos.response.UsuarioDTOResponse;
 import edu.unimagdalena.reservasespacios.entities.Usuario;
 import edu.unimagdalena.reservasespacios.exceptions.UserAlreadyExists;
+import edu.unimagdalena.reservasespacios.exceptions.notFound.RolNotFoundException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.UsuarioNotFoundException;
 import edu.unimagdalena.reservasespacios.repositories.RolRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
@@ -27,10 +28,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(usuarioRepository.findByCorreo(usuario.correo()).isPresent()){
             throw new UserAlreadyExists("El correo ya esta registrado.");
         }
+        if (!rolRepository.findByRol(usuario.rol()).isPresent()){
+            throw new RolNotFoundException("El rol no existe");
+        }
+
+        Usuario toSave = usuarioMapper.CreateDTOToUsuario(usuario);
+        toSave.setRol(rolRepository.findByRol(usuario.rol()).get());
 
         return usuarioMapper
                 .UsuarioToDTOResponse(
-                        usuarioRepository.save(usuarioMapper.CreateDTOToUsuario(usuario))
+                        usuarioRepository.save(toSave)
                 );
     }
 
