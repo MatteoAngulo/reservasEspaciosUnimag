@@ -46,9 +46,9 @@ public class ProblemaServiceImpl implements ProblemaService {
         Problema nueva = mapper.toEntity(dto);
 
         // 2) cargar espacio o lanzar excepción
-        Espacio espacio = espacioRepository.findById(dto.getEspacioId())
+        Espacio espacio = espacioRepository.findById(dto.espacioId())
                 .orElseThrow(() ->
-                        new EspacioNotFoundException("Espacio con ID " + dto.getEspacioId() + " no encontrado")
+                        new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado")
                 );
         nueva.setEspacio(espacio);
 
@@ -69,12 +69,12 @@ public class ProblemaServiceImpl implements ProblemaService {
         mapper.updateFromDto(dto, existente);
 
         // 3) si cambió el espacio asociado, recargarlo
-        if (dto.getEspacioId() != null &&
-                (existente.getEspacio() == null || !existente.getEspacio().getIdEspacio().equals(dto.getEspacioId()))) {
+        if (dto.espacioId() != null &&
+                (existente.getEspacio() == null || !existente.getEspacio().getIdEspacio().equals(dto.espacioId()))) {
 
-            Espacio nuevoEsp = espacioRepository.findById(dto.getEspacioId())
+            Espacio nuevoEsp = espacioRepository.findById(dto.espacioId())
                     .orElseThrow(() ->
-                            new EspacioNotFoundException("Espacio con ID " + dto.getEspacioId() + " no encontrado")
+                            new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado")
                     );
             existente.setEspacio(nuevoEsp);
         }
