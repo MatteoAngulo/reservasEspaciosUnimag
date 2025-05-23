@@ -165,7 +165,7 @@ public class ReservaServiceImpl implements ReservaService {
         // Se usa el motivo de la reserva como comentario inicial en el historial
         historialReservaService.registrarCambioReserva(reservaGuardada, reservaGuardada.getEstadoReserva(), reservaGuardada.getMotivo());
 
-        return reservaMapper.toReservaEstDtoResponse(reserva);
+        return reservaMapper.toReservaEstDtoResponse(reservaGuardada);
     }
 
     //Estudiante
@@ -195,7 +195,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     //Ambos
     @Override
-    public ReservaDtoResponse cancelarReserva(Long idReserva) {
+    public ReservaDtoResponse cancelarReserva(Long idReserva, String motivo) {
 
 
         Reserva reserva = reservaRepository.findById(idReserva)
@@ -213,7 +213,7 @@ public class ReservaServiceImpl implements ReservaService {
         historialReservaService.registrarCambioReserva(
                 reservaCancelada,
                 EstadoReserva.CANCELADA,
-                "Reserva cancelada");
+                motivo);
 
         return reservaMapper.toReservaDtoResponse(reservaCancelada);
     }
