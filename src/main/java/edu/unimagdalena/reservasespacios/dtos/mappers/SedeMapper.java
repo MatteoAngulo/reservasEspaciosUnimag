@@ -27,7 +27,7 @@ public interface SedeMapper {
 
     /**
      * Actualiza una entidad existente desde los datos del DTO.
-     * Sólo nombre se copiará (espacios e id se dejan intactos).
+     * Sólo correo se copiará (espacios e id se dejan intactos).
      */
    /* @Mapping(target = "id", ignore = true)
     @Mapping(target = "espacios", ignore = true)*/

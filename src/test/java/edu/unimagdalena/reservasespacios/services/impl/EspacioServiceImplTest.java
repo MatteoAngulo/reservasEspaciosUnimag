@@ -33,19 +33,19 @@ public class EspacioServiceImplTest {
     void CrearEspacio(){
         EspacioDTOResquests espacioDTO = EspacioDTOResquests.builder()
                 .tipo("cancha")
-                .nombre("cancha 1")
+                .correo("cancha 1")
                 .restricciones("no se juega después de 8").build();
 
         Espacio espacioMock = Espacio.builder()
                 .idEspacio(1L)
                 .tipo("cancha")
-                .nombre("cancha 1")
+                .correo("cancha 1")
                 .restricciones("no se juega después de 8").build();
 
         EspacioDTOResponse expectedResponse = EspacioDTOResponse.builder()
                 .id(1L)
                 .tipo("cancha")
-                .nombre("cancha 1")
+                .correo("cancha 1")
                 .restricciones("no se juega después de 8").build();
 
         when(mapper.dtoToEspacio(espacioDTO)).thenReturn(espacioMock);

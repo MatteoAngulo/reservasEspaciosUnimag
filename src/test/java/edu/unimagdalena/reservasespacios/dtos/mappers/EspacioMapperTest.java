@@ -19,7 +19,7 @@ public class EspacioMapperTest {
     @Test
     void testEspacioToDto() {
         Espacio espacioPrueba = Espacio.builder().idEspacio(1L)
-                .nombre("Cancha futbol 1")
+                .correo("Cancha futbol 1")
                 .restricciones("no se puede jugar despues de 8").build();
 
         EspacioDTOResponse dto = mapper.espacioToDTO(espacioPrueba);

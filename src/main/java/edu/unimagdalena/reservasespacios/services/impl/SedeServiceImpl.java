@@ -52,7 +52,7 @@ public class SedeServiceImpl implements SedeService {
                 .orElseThrow(() ->
                         new SedeNotFoundException("Sede con ID " + idSede + " no encontrada")
                 );
-        // 2) Aplicar cambios (solo nombre)
+        // 2) Aplicar cambios (solo correo)
         sedeMapper.updateSedeFromDto(sedeDtoRequest, existente);
         // 3) Guardar y devolver DTO
         Sede updated = sedeRepository.save(existente);
