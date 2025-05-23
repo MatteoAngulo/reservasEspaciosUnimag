@@ -10,6 +10,7 @@ import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import edu.unimagdalena.reservasespacios.entities.HorarioEspacio;
 import edu.unimagdalena.reservasespacios.entities.Reserva;
 import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
+import edu.unimagdalena.reservasespacios.exceptions.FechaInvalidaParaHorarioException;
 import edu.unimagdalena.reservasespacios.exceptions.ProblemaEstadoReservaException;
 import edu.unimagdalena.reservasespacios.exceptions.ReservaExistenteException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.EstudianteNotFoundException;
@@ -93,6 +94,8 @@ public class ReservaServiceImpl implements ReservaService {
         HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(reservaDto.idHorarioEspacio())
                 .orElseThrow(() -> new HorarioEspacioNotFoundException("Horario-espacio con ID: "+ reservaDto.idHorarioEspacio() + " no encontrado"));
 
+        validarFechaConDiaHorario(reservaDto.fecha(), horarioEspacio);
+
         validarReservaDisponible(reservaDto.fecha(), reservaDto.idHorarioEspacio());
 
         Reserva reserva = reservaMapper.toEntity(reservaDto);
@@ -120,6 +123,8 @@ public class ReservaServiceImpl implements ReservaService {
         HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(reservaDto.idHorarioEspacio())
                 .orElseThrow(() -> new HorarioEspacioNotFoundException("El horario-espacio con ID: " + reservaDto.idHorarioEspacio() + " no encontrado"));
 
+        validarFechaConDiaHorario(reservaDto.fecha(), horarioEspacio);
+
         validarReservaDisponible(reservaDto.fecha(), reservaDto.idHorarioEspacio());
 
         reserva.setEstadoReserva(EstadoReserva.PENDIENTE);
@@ -145,6 +150,8 @@ public class ReservaServiceImpl implements ReservaService {
         HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(dto.idHorarioEspacio())
                 .orElseThrow(() -> new HorarioEspacioNotFoundException("El horario-espacio con ID: " + dto.idHorarioEspacio() + " no encontrado"));
 
+        validarFechaConDiaHorario(dto.fecha(), horarioEspacio);
+
         validarReservaDisponible(dto.fecha(), dto.idHorarioEspacio());
 
         Reserva reserva = reservaMapper.toEntityEst(dto);
@@ -169,6 +176,8 @@ public class ReservaServiceImpl implements ReservaService {
 
         HorarioEspacio horarioEspacio = horarioEspacioRepository.findById(dto.idHorarioEspacio())
                 .orElseThrow(() -> new HorarioEspacioNotFoundException("El horario-espacio con ID: " + dto.idHorarioEspacio() + " no encontrado"));
+
+        validarFechaConDiaHorario(dto.fecha(), horarioEspacio);
 
         validarReservaDisponible(dto.fecha(), dto.idHorarioEspacio());
 
@@ -259,6 +268,12 @@ public class ReservaServiceImpl implements ReservaService {
 
         if(reservaExistente.isPresent()){
             throw new ReservaExistenteException(fecha, idHorarioEspacio);
+        }
+    }
+
+    private void validarFechaConDiaHorario(LocalDate fecha, HorarioEspacio horarioEspacio) {
+        if (!horarioEspacio.getDia().equals(fecha.getDayOfWeek())) {
+            throw new FechaInvalidaParaHorarioException("La fecha no corresponde al día del horario seleccionado.");
         }
     }
 }
