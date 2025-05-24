@@ -1,6 +1,7 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
 import edu.unimagdalena.reservasespacios.dtos.mappers.ReservaMapper;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaAccionesDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
@@ -11,6 +12,7 @@ import edu.unimagdalena.reservasespacios.entities.HorarioEspacio;
 import edu.unimagdalena.reservasespacios.entities.Reserva;
 import edu.unimagdalena.reservasespacios.enums.EstadoReserva;
 import edu.unimagdalena.reservasespacios.exceptions.FechaInvalidaParaHorarioException;
+import edu.unimagdalena.reservasespacios.exceptions.IdInvalidoException;
 import edu.unimagdalena.reservasespacios.exceptions.ProblemaEstadoReservaException;
 import edu.unimagdalena.reservasespacios.exceptions.ReservaExistenteException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.EstudianteNotFoundException;
@@ -84,7 +86,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     }
 
-    //Adminu
+    //Admin
     @Override
     public ReservaDtoResponse saveReservaAdmin(ReservaDtoRequest reservaDto) {
 
@@ -195,11 +197,14 @@ public class ReservaServiceImpl implements ReservaService {
 
     //Ambos
     @Override
-    public ReservaDtoResponse cancelarReserva(Long idReserva, String motivo) {
+    public ReservaDtoResponse cancelarReserva(ReservaAccionesDtoRequest dto, Long idReserva) {
 
+        if(!dto.idReserva().equals(idReserva)){
+            throw new IdInvalidoException("Los id's son diferentes");
+        }
 
-        Reserva reserva = reservaRepository.findById(idReserva)
-                .orElseThrow(() -> new ReservaNotFoundException(idReserva));
+        Reserva reserva = reservaRepository.findById(dto.idReserva())
+                .orElseThrow(() -> new ReservaNotFoundException(dto.idReserva()));
 
         if(reserva.getEstadoReserva() == EstadoReserva.RECHAZADO
         || reserva.getEstadoReserva() == EstadoReserva.CANCELADA){
@@ -213,7 +218,7 @@ public class ReservaServiceImpl implements ReservaService {
         historialReservaService.registrarCambioReserva(
                 reservaCancelada,
                 EstadoReserva.CANCELADA,
-                motivo);
+                dto.motivo());
 
         return reservaMapper.toReservaDtoResponse(reservaCancelada);
     }
@@ -241,7 +246,11 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDtoResponse rechazarReserva(Long idReserva, String motivoRechazo) {
+    public ReservaDtoResponse rechazarReserva(Long idReserva, ReservaAccionesDtoRequest dtoRequest) {
+
+        if(!dtoRequest.idReserva().equals(idReserva)){
+            throw new IdInvalidoException("Los id's son diferentes");
+        }
 
         Reserva reserva = reservaRepository.findById(idReserva)
                 .orElseThrow(() -> new ReservaNotFoundException(idReserva));
@@ -257,7 +266,7 @@ public class ReservaServiceImpl implements ReservaService {
         historialReservaService.registrarCambioReserva(
                 reservaRechazada,
                 EstadoReserva.RECHAZADO,
-                motivoRechazo);
+                dtoRequest.motivo());
 
         return reservaMapper.toReservaDtoResponse(reservaRechazada);
     }
