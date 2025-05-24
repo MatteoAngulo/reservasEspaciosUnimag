@@ -65,7 +65,7 @@ public class ReservaServiceImpl implements ReservaService {
                 .toList();
     }
 
-    //Ambos
+    //Admin
     @Override
     public List<ReservaDtoResponse> findReservasPorEstado(EstadoReserva estado) {
         return reservaRepository.findReservaByEstadoReserva(estado)
@@ -74,7 +74,7 @@ public class ReservaServiceImpl implements ReservaService {
                 .toList();
     }
 
-    //Ambos
+    //Admin
     @Override
     public ReservaDtoResponse findReservaPorHorarioEspacioYFecha(LocalDate fecha, Long idHorarioEspacio) {
         Reserva reserva = reservaRepository.findReservaByFechaAndHorarioEspacio_IdHorarioEspacio(fecha, idHorarioEspacio)
@@ -84,7 +84,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     }
 
-    //Admin
+    //Adminu
     @Override
     public ReservaDtoResponse saveReservaAdmin(ReservaDtoRequest reservaDto) {
 
