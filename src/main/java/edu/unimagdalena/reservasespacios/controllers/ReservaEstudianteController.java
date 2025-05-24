@@ -1,6 +1,6 @@
 package edu.unimagdalena.reservasespacios.controllers;
 
-import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaAccionesDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaCambioEstadoDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ReservaDtoResponse;
 import edu.unimagdalena.reservasespacios.dtos.response.ReservaEstDtoResponse;
@@ -58,7 +58,7 @@ public class ReservaEstudianteController {
     @PatchMapping("/{idReserva}/cancelar")
     public ResponseEntity<ReservaDtoResponse> cancelarReserva(
             @PathVariable Long idReserva,
-            @RequestBody @Valid ReservaAccionesDtoRequest dto){
+            @RequestBody @Valid ReservaCambioEstadoDtoRequest dto){
 
         return ResponseEntity.ok(reservaService.cancelarReserva(dto, idReserva));
     }

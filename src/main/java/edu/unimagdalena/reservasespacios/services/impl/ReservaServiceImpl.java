@@ -1,7 +1,7 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
 import edu.unimagdalena.reservasespacios.dtos.mappers.ReservaMapper;
-import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaAccionesDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaCambioEstadoDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
@@ -197,7 +197,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     //Ambos
     @Override
-    public ReservaDtoResponse cancelarReserva(ReservaAccionesDtoRequest dto, Long idReserva) {
+    public ReservaDtoResponse cancelarReserva(ReservaCambioEstadoDtoRequest dto, Long idReserva) {
 
         if(!dto.idReserva().equals(idReserva)){
             throw new IdInvalidoException("Los id's son diferentes");
@@ -246,7 +246,7 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDtoResponse rechazarReserva(Long idReserva, ReservaAccionesDtoRequest dtoRequest) {
+    public ReservaDtoResponse rechazarReserva(Long idReserva, ReservaCambioEstadoDtoRequest dtoRequest) {
 
         if(!dtoRequest.idReserva().equals(idReserva)){
             throw new IdInvalidoException("Los id's son diferentes");

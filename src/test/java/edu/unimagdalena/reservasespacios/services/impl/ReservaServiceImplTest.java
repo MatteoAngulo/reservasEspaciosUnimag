@@ -1,7 +1,7 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
 import edu.unimagdalena.reservasespacios.dtos.mappers.ReservaMapper;
-import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaAccionesDtoRequest;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaCambioEstadoDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
@@ -376,7 +376,7 @@ class ReservaServiceImplTest {
     @Test
     void cancelarReserva() {
 
-        ReservaAccionesDtoRequest dto = new ReservaAccionesDtoRequest(
+        ReservaCambioEstadoDtoRequest dto = new ReservaCambioEstadoDtoRequest(
                 2L,
                 "No podré asistir"
         );
@@ -440,7 +440,7 @@ class ReservaServiceImplTest {
     @Test
     void rechazarReserva() {
 
-        ReservaAccionesDtoRequest dto = new ReservaAccionesDtoRequest(
+        ReservaCambioEstadoDtoRequest dto = new ReservaCambioEstadoDtoRequest(
                 3L,
                 "Solicitud inválida"
         );
