@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @MappedSuperclass
 @Entity
@@ -13,11 +18,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
- // las validaciones se hacen en los dtos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long usuarioId;
-   protected String correo;
+    protected String correo;
     protected String contrasena;
 
     @ManyToOne(fetch = FetchType.LAZY)
