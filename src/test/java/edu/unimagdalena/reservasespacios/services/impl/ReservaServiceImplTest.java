@@ -1,6 +1,7 @@
 package edu.unimagdalena.reservasespacios.services.impl;
 
 import edu.unimagdalena.reservasespacios.dtos.mappers.ReservaMapper;
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaCambioEstadoDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
@@ -19,9 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -29,7 +28,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -377,10 +375,13 @@ class ReservaServiceImplTest {
 
     @Test
     void cancelarReserva() {
-        Long idReserva = 2L;
-        String motivo = "No podré asistir";
 
-        when(repository.findById(idReserva)).thenReturn(Optional.of(reserva2));
+        ReservaCambioEstadoDtoRequest dto = new ReservaCambioEstadoDtoRequest(
+                2L,
+                "No podré asistir"
+        );
+
+        when(repository.findById(dto.idReserva())).thenReturn(Optional.of(reserva2));
 
         ReservaDtoResponse expectedResponse = new ReservaDtoResponse(
                 reserva2.getIdReserva(),
@@ -388,21 +389,21 @@ class ReservaServiceImplTest {
                 reserva2.getHorarioEspacio().getIdHorarioEspacio(),
                 EstadoReserva.CANCELADA,
                 reserva2.getFecha(),
-                motivo
+                dto.motivo()
         );
 
         when(repository.save(any(Reserva.class))).thenReturn(reserva2);
         when(mapper.toReservaDtoResponse(any(Reserva.class))).thenReturn(expectedResponse);
 
-        ReservaDtoResponse result = servicio.cancelarReserva(idReserva, motivo);
+        ReservaDtoResponse result = servicio.cancelarReserva(dto, dto.idReserva());
 
         assertNotNull(result);
         assertEquals(expectedResponse, result);
         assertEquals(EstadoReserva.CANCELADA, result.estadoReserva());
 
-        verify(repository).findById(idReserva);
+        verify(repository).findById(dto.idReserva());
         verify(repository).save(any(Reserva.class));
-        verify(historialReservaService).registrarCambioReserva(reserva2, EstadoReserva.CANCELADA, motivo);
+        verify(historialReservaService).registrarCambioReserva(reserva2, EstadoReserva.CANCELADA, dto.motivo());
         verify(mapper).toReservaDtoResponse(reserva2);
     }
 
@@ -438,8 +439,11 @@ class ReservaServiceImplTest {
 
     @Test
     void rechazarReserva() {
-        Long idReserva = 3L;
-        String motivo = "Solicitud inválida";
+
+        ReservaCambioEstadoDtoRequest dto = new ReservaCambioEstadoDtoRequest(
+                3L,
+                "Solicitud inválida"
+        );
 
         Reserva reservaRechazar = Reserva.builder()
                 .idReserva(3L)
@@ -450,7 +454,7 @@ class ReservaServiceImplTest {
                 .motivo("JUEGO")
                 .build();
 
-        when(repository.findById(idReserva)).thenReturn(Optional.of(reservaRechazar));
+        when(repository.findById(dto.idReserva())).thenReturn(Optional.of(reservaRechazar));
 
         ReservaDtoResponse expectedResponse = new ReservaDtoResponse(
                 reservaRechazar.getIdReserva(),
@@ -458,21 +462,21 @@ class ReservaServiceImplTest {
                 reservaRechazar.getHorarioEspacio().getIdHorarioEspacio(),
                 EstadoReserva.RECHAZADO,
                 reservaRechazar.getFecha(),
-                motivo
+                dto.motivo()
         );
 
         when(repository.save(any(Reserva.class))).thenReturn(reservaRechazar);
         when(mapper.toReservaDtoResponse(any(Reserva.class))).thenReturn(expectedResponse);
 
-        ReservaDtoResponse result = servicio.rechazarReserva(idReserva, motivo);
+        ReservaDtoResponse result = servicio.rechazarReserva(dto.idReserva(), dto);
 
         assertNotNull(result);
         assertEquals(expectedResponse, result);
         assertEquals(EstadoReserva.RECHAZADO, result.estadoReserva());
 
-        verify(repository).findById(idReserva);
+        verify(repository).findById(dto.idReserva());
         verify(repository).save(any(Reserva.class));
-        verify(historialReservaService).registrarCambioReserva(reservaRechazar, EstadoReserva.RECHAZADO, motivo);
+        verify(historialReservaService).registrarCambioReserva(reservaRechazar, EstadoReserva.RECHAZADO, dto.motivo());
         verify(mapper).toReservaDtoResponse(reservaRechazar);
     }
 }

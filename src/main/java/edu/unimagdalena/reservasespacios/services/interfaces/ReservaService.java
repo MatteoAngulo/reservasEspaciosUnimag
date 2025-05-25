@@ -1,5 +1,6 @@
 package edu.unimagdalena.reservasespacios.services.interfaces;
 
+import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaCambioEstadoDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaEstDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.requests.reserva.ReservaUpdateDtoRequest;
@@ -23,9 +24,9 @@ public interface ReservaService {
     ReservaEstDtoResponse saveReservaEstudiante(ReservaEstDtoRequest dto, Long idEst);
     ReservaEstDtoResponse updateReservaEstudiante(Long idReserva, ReservaEstDtoRequest dto);
 
-    ReservaDtoResponse cancelarReserva(Long idReserva, String motivo);
+    ReservaDtoResponse cancelarReserva(ReservaCambioEstadoDtoRequest dto, Long idReserva);
     ReservaDtoResponse aprobarReserva(Long idReserva);
-    ReservaDtoResponse rechazarReserva(Long idReserva, String motivoRechazo);
+    ReservaDtoResponse rechazarReserva(Long idReserva, ReservaCambioEstadoDtoRequest dtoRequest);
 
 
 
