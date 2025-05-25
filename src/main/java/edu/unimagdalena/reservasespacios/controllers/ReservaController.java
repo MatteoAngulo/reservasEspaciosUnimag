@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,11 +26,13 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     @GetMapping()
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<ReservaDtoResponse>> obtenerTodasReservas(){
         return ResponseEntity.ok(reservaService.findAllReservas());
     }
 
     @GetMapping("/por-id/{idReserva}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> obtenerReservaPorId(
             @PathVariable
             @NotNull(message = "El id no puede ser nulo")
@@ -40,6 +43,7 @@ public class ReservaController {
     }
 
     @GetMapping("/por-estudiante/{idEst}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<ReservaDtoResponse>> obtenerReservasPorEstudiante(
             @PathVariable
             @NotNull(message = "El id no puede ser nulo")
@@ -50,6 +54,7 @@ public class ReservaController {
     }
 
     @GetMapping("/por-estado")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<ReservaDtoResponse>> obtenerReservasPorEstado(@RequestParam
                                                                             EstadoReserva estado){
 
@@ -57,6 +62,7 @@ public class ReservaController {
     }
 
     @GetMapping("/por-horario-y-fecha")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> obtenerReservaPorHorarioEspacioYFecha(
             @RequestParam LocalDate fecha,
             @RequestParam Long idHorarioEspacio
@@ -66,11 +72,13 @@ public class ReservaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> guardarReserva(@RequestBody @Valid ReservaDtoRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.saveReservaAdmin(dto));
     }
 
     @PutMapping("/{idReserva}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> actualizarReserva(
             @PathVariable
             @NotNull(message = "El id no puede ser nulo")
@@ -82,6 +90,7 @@ public class ReservaController {
     }
 
     @PatchMapping("/{idReserva}/cancelar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> cancelarReserva(
             @PathVariable Long idReserva,
             @RequestBody @Valid ReservaCambioEstadoDtoRequest dto){
@@ -90,11 +99,13 @@ public class ReservaController {
     }
 
     @PatchMapping("/{idReserva}/aprobar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> aprobarReserva(@PathVariable Long idReserva){
         return ResponseEntity.ok(reservaService.aprobarReserva(idReserva));
     }
 
     @PatchMapping("/{idReserva}/rechazar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<ReservaDtoResponse> rechazarReserva(
             @PathVariable Long idReserva,
             @RequestBody @Valid ReservaCambioEstadoDtoRequest dto){

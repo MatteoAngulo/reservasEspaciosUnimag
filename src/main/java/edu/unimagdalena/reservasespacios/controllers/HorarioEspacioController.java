@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
@@ -22,11 +23,13 @@ public class HorarioEspacioController {
     private final HorarioEspacioService horarioEspacioService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<HorarioEspacioDtoResponse>> obtenerTodosHorariosServicios(){
         return ResponseEntity.ok(horarioEspacioService.findAllHorarioEspacio());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<HorarioEspacioDtoResponse> obtenerHorarioEspacioPorId(@PathVariable
                                                                                     @NotNull(message = "El id no puede ser nulo")
                                                                                     @Positive(message = "El id debe ser positivo")
@@ -36,11 +39,13 @@ public class HorarioEspacioController {
     }
 
     @GetMapping("/por-dia")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<HorarioEspacioDtoResponse>> obtenerHorarioEspacioPorDia(@RequestParam DayOfWeek dia){
         return ResponseEntity.ok(horarioEspacioService.findHorariosPorDia(dia));
     }
 
     @GetMapping("/por-espacio/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<HorarioEspacioDtoResponse>> obtenerHorarioEspacioPorEspacio(@PathVariable
                                                                                                @NotNull(message = "El id no puede ser nulo")
                                                                                                @Positive(message = "El id debe ser positivo")
@@ -50,6 +55,7 @@ public class HorarioEspacioController {
     }
 
     @GetMapping("/por-espacio-y-dia")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<List<HorarioEspacioDtoResponse>> obtenerHorarioEspacioPorEspacioYDia(@RequestParam DayOfWeek dia,
                                                                                                 @RequestParam Long idEspacio) {
 
@@ -57,6 +63,7 @@ public class HorarioEspacioController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<HorarioEspacioDtoResponse> guardarHorarioEspacio(@RequestBody @Valid
                                                                            HorarioEspacioDtoRequest dto){
 
@@ -64,6 +71,7 @@ public class HorarioEspacioController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<HorarioEspacioDtoResponse> actualizarHorarioEspacio(@PathVariable
                                                                                   @NotNull(message = "El id no puede ser nulo")
                                                                                   @Positive(message = "El id debe ser positivo")
@@ -74,6 +82,7 @@ public class HorarioEspacioController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> borrarHorarioEspacio(@PathVariable
                                                          @NotNull(message = "El id no puede ser nulo")
                                                          @Positive(message = "El id debe ser positivo")
