@@ -4,6 +4,8 @@ import edu.unimagdalena.reservasespacios.dtos.requests.ProblemaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ProblemaDtoResponse;
 import edu.unimagdalena.reservasespacios.services.interfaces.ProblemaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,14 +40,20 @@ public class ProblemaController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
-    public ResponseEntity<ProblemaDtoResponse> obtenerProblema(@PathVariable("id") Long id){
+    public ResponseEntity<ProblemaDtoResponse> obtenerProblema(@PathVariable
+                                                                   @NotNull(message = "El id no puede estar vacio")
+                                                                   @Positive(message = "El id debe ser positivo")
+                                                                   Long id){
         ProblemaDtoResponse resp = problemaService.findProblemaById(id);
         return ResponseEntity.ok(resp);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    public ResponseEntity<ProblemaDtoResponse> actualizarProblema(@PathVariable("id") Long id,
+    public ResponseEntity<ProblemaDtoResponse> actualizarProblema(@PathVariable
+                                                                      @NotNull(message = "El id no puede estar vacio")
+                                                                      @Positive(message = "El id debe ser positivo")
+                                                                      Long id,
             @RequestBody @Valid ProblemaDtoRequest dto){
         ProblemaDtoResponse updated = problemaService.updateProblema(id, dto);
         return ResponseEntity.ok(updated);
@@ -53,7 +61,10 @@ public class ProblemaController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    public ResponseEntity<Void> eliminarProblema(@PathVariable("id") Long id){
+    public ResponseEntity<Void> eliminarProblema(@PathVariable
+                                                     @NotNull(message = "El id no puede estar vacio")
+                                                     @Positive(message = "El id debe ser positivo")
+                                                     Long id){
         problemaService.deleteProblema(id);
         return ResponseEntity.noContent().build();
     }

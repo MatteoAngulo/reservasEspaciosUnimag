@@ -4,6 +4,8 @@ import edu.unimagdalena.reservasespacios.dtos.requests.SedeDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.SedeDtoResponse;
 import edu.unimagdalena.reservasespacios.services.interfaces.SedeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,9 @@ public class SedeController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
-    public ResponseEntity<SedeDtoResponse> getSedeById(@PathVariable("id") Long id) {
+    public ResponseEntity<SedeDtoResponse> getSedeById(@PathVariable
+                                                           @NotNull(message = "El id no puede estar vacio")
+                                                           @Positive(message = "El id debe ser positivo") Long id) {
         SedeDtoResponse sede = sedeService.findSedeById(id);
         return ResponseEntity.ok(sede);
     }
@@ -46,7 +50,10 @@ public class SedeController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<SedeDtoResponse> updateSede(
-            @PathVariable("id") Long id,
+            @PathVariable
+            @NotNull(message = "El id no puede estar vacio")
+            @Positive(message = "El id debe ser positivo")
+            Long id,
             @RequestBody @Valid SedeDtoRequest dto) {
         SedeDtoResponse updated = sedeService.updateSede(id, dto);
         return ResponseEntity.ok(updated);
@@ -54,7 +61,9 @@ public class SedeController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
-    public ResponseEntity<Void> deleteSede(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteSede(@PathVariable
+                                               @NotNull(message = "El id no puede estar vacio")
+                                               @Positive(message = "El id debe ser positivo") Long id) {
         sedeService.deleteSede(id);
         return ResponseEntity.noContent().build();
     }
