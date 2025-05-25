@@ -6,6 +6,7 @@ import edu.unimagdalena.reservasespacios.dtos.requests.estudiante.EstudianteDTOU
 import edu.unimagdalena.reservasespacios.dtos.response.EstudianteDTOResponse;
 import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import edu.unimagdalena.reservasespacios.entities.Usuario;
+import edu.unimagdalena.reservasespacios.enums.RolEnum;
 import edu.unimagdalena.reservasespacios.exceptions.UserAlreadyExists;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.EstudianteNotFoundException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.RolNotFoundException;
@@ -15,6 +16,7 @@ import edu.unimagdalena.reservasespacios.repositories.RolRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
 import edu.unimagdalena.reservasespacios.services.interfaces.EstudianteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
     private final EstudianteMapper estudianteMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public EstudianteDTOResponse saveEstudiante(EstudianteDTOCreate estudiante) {
@@ -36,14 +39,11 @@ public class EstudianteServiceImpl implements EstudianteService {
         if (usuarioRepository.findByCorreo(estudiante.correo()).isPresent()) {
             throw new UserAlreadyExists("El usuario con el correo "+estudiante.correo()+" ya existe");
         }
-        if (rolRepository.findByRol(estudiante.rol()).isEmpty()){
-            throw new RolNotFoundException("El rol "+estudiante.rol()+" no existe");
-        }
 
         Usuario usuario1 = Usuario.builder()
                 .correo(estudiante.correo())
-                .contrasena(estudiante.contrasena())
-                .rol(rolRepository.findByRol(estudiante.rol()).get())
+                .contrasena(passwordEncoder.encode(estudiante.contrasena()))
+                .rol(rolRepository.findByRol(RolEnum.ESTUDIANTE).get())
                 .build();
 
         Estudiante estudiante1 = Estudiante.builder()
@@ -81,7 +81,7 @@ public class EstudianteServiceImpl implements EstudianteService {
         Estudiante estudianteToUpdate = estudianteRepository.findByCodigoEstudiantil(estudiante.codigoEstudiantil()).orElseThrow(() -> new EstudianteNotFoundException("El estudiante con el codigo estudiantil " + estudiante.codigoEstudiantil() + " no existe"));
 
         estudianteToUpdate.setNombre(estudiante.nombre());
-        estudianteToUpdate.getUsuario().setContrasena(estudiante.contrasena());
+        estudianteToUpdate.getUsuario().setContrasena(passwordEncoder.encode(estudiante.contrasena()));
         return estudianteMapper.estudianteToDTOResponse(estudianteRepository.save(estudianteToUpdate));
     }
 

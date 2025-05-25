@@ -22,9 +22,6 @@ public record EstudianteDTOCreate(
 
         @NotBlank(message = "La contraseña no puede estar vacía")
         @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
-        String contrasena,
-
-        @NotNull(message = "El rol es obligatorio")
-        RolEnum rol
+        String contrasena
 ) {
 }

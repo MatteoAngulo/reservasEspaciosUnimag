@@ -11,6 +11,7 @@ import edu.unimagdalena.reservasespacios.repositories.RolRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
 import edu.unimagdalena.reservasespacios.services.interfaces.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
     private final RolRepository rolRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDTOResponse saveUsuario(UsuarioDTOCreate usuario) {
@@ -34,6 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         Usuario toSave = usuarioMapper.CreateDTOToUsuario(usuario);
         toSave.setRol(rolRepository.findByRol(usuario.rol()).get());
+        toSave.setContrasena(passwordEncoder.encode(usuario.contrasena()));
 
         return usuarioMapper
                 .UsuarioToDTOResponse(
@@ -67,7 +70,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTOResponse updateUsuario(UsuarioDTOCreate usuario) {
         Usuario usuarioToUpdate = usuarioRepository.findByCorreo(usuario.correo()).orElseThrow(
                 () -> new UsuarioNotFoundException("El usuario con el correo " + usuario.correo() + " no existe."));
-        usuarioToUpdate.setContrasena(usuario.contrasena());
+        usuarioToUpdate.setContrasena(passwordEncoder.encode(usuario.contrasena()));
         usuarioToUpdate.setRol(rolRepository.findByRol(usuario.rol()).get());
         return usuarioMapper.UsuarioToDTOResponse(usuarioRepository.save(usuarioToUpdate));
     }

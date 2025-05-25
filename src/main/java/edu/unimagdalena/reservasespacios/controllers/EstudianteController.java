@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +26,13 @@ public class EstudianteController {
     private final EstudianteService estudianteService;
 
     @PostMapping("/register")
+    //@PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> registrarEstudiante(@RequestBody @Valid EstudianteDTOCreate estudianteDTOCreate) {
         return new ResponseEntity<>(estudianteService.saveEstudiante(estudianteDTOCreate), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> findEstudianteById(@PathVariable
                                                                     @NotNull(message = "El id no puede estar vacio")
                                                                     @Positive(message = "El id debe ser positivo")
@@ -38,6 +41,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/por-codigo")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> findEstudianteByCodigo(@RequestParam
                                                                         @NotNull(message = "El codigo no puede estar vacio")
                                                                         @Positive(message = "El codigo no puede ser negativo")
@@ -46,16 +50,19 @@ public class EstudianteController {
     }
 
     @GetMapping("/todos")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<EstudianteDTOResponse>> findAllEstudiantes() {
         return ResponseEntity.ok(estudianteService.findEstudiantes());
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> actualizarEstudiante(@RequestBody @Valid EstudianteDTOUpdate estudianteDTOUpdate) {
         return ResponseEntity.ok(estudianteService.updateEstudiante(estudianteDTOUpdate));
     }
 
     @DeleteMapping("/borrar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> borrarEstudiante(@RequestParam
                                                  @NotNull(message = "El codigo no puede estar vacio")
                                                  @Positive(message = "El codigo debe ser positivo")

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/register")
+    //@PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> registrarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate) {
         return new ResponseEntity(usuarioService.saveUsuario(usuarioDTOCreate), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> obtenerUsuarioPorId(@PathVariable
                                                  @NotNull(message = "El id no puede ser nulo")
                                                  @Positive(message = "El id debe ser positivo")
@@ -37,22 +40,26 @@ public class UsuarioController {
     }
 
     @GetMapping("/por-correo")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> obtenerUsuarioPorCorreo(@RequestParam @NotBlank(message = "El correo no puede estar en blanco")
                                                           String correo){
         return ResponseEntity.ok(usuarioService.findUsuarioByCorreo(correo));
     }
 
     @GetMapping("/todos")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<UsuarioDTOResponse>> obtenerTodosLosUsuarios(){
         return ResponseEntity.ok(usuarioService.findUsuarios());
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> actualizarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate){
         return ResponseEntity.ok(usuarioService.updateUsuario(usuarioDTOCreate));
     }
 
     @DeleteMapping("/borrar")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> borrarUsuario(@RequestParam @NotBlank(message = "El correo no puede estar en blanco")
                                   String correo){
         usuarioService.deleteUsuario(correo);

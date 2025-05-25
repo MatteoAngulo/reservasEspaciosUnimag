@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface UsuarioMapper {
 
     @Mapping(source = "rol", target = "rol", ignore = true)
+    @Mapping(source = "constrasena", target = "constrasena", ignore = true)
     Usuario CreateDTOToUsuario(UsuarioDTOCreate usuarioDTOCreate);
 
     @Mapping(source = "rol.rolEnum", target = "rol")
