@@ -18,6 +18,7 @@ public class Rol {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rolId;
+    @Enumerated(EnumType.STRING)
     private RolEnum rolEnum;
 
     @OneToMany(mappedBy = "rol",fetch = FetchType.LAZY)
