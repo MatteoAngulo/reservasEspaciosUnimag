@@ -101,7 +101,7 @@ class EstudianteControllerTest {
                 .nombre("pollo 1")
                 .correo("pollo1@gmail.com")
                 .contrasena("contrasena")
-                .rol(RolEnum.ESTUDIANTE)
+                //.rol(RolEnum.ESTUDIANTE)
                 .build();
 
         when(estudianteService.saveEstudiante(any(EstudianteDTOCreate.class))).thenReturn(estudianteDTOResponse1);
