@@ -17,6 +17,7 @@ public interface ProblemaMapper {
      */
     @Mapping(target = "idProblema", ignore = true)
     @Mapping(target = "espacio",       ignore = true)
+    @Mapping(target = "estudiante", ignore = true)
     Problema toEntity(ProblemaDtoRequest dto);
 
     /**
@@ -24,6 +25,7 @@ public interface ProblemaMapper {
      * Extraemos espacio.idEspacio a espacioId en el DTO.
      */
     @Mapping(source = "espacio.idEspacio", target = "espacioId")
+    @Mapping(source = "estudiante.idEstudiante", target = "idEstudiante")
     ProblemaDtoResponse toResponse(Problema problema);
 
     /**

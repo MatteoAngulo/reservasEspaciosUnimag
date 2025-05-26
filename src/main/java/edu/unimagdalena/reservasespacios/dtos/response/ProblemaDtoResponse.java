@@ -7,5 +7,6 @@ public record ProblemaDtoResponse (
         Long espacioId,
         String estado,
         String descripcion,
-        Date fecha
+        Date fecha,
+        Long idEstudiante
 ){}

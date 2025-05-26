@@ -4,10 +4,14 @@ import edu.unimagdalena.reservasespacios.dtos.requests.ProblemaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ProblemaDtoResponse;
 import edu.unimagdalena.reservasespacios.dtos.mappers.ProblemaMapper;
 import edu.unimagdalena.reservasespacios.entities.Espacio;
+import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import edu.unimagdalena.reservasespacios.entities.Problema;
+import edu.unimagdalena.reservasespacios.enums.EstadoProblema;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.EspacioNotFoundException;
+import edu.unimagdalena.reservasespacios.exceptions.notFound.EstudianteNotFoundException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.ProblemaNotFoundException;
 import edu.unimagdalena.reservasespacios.repositories.EspacioRepository;
+import edu.unimagdalena.reservasespacios.repositories.EstudianteRepository;
 import edu.unimagdalena.reservasespacios.repositories.ProblemaRepository;
 import edu.unimagdalena.reservasespacios.services.interfaces.ProblemaService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ public class ProblemaServiceImpl implements ProblemaService {
 
     private final ProblemaRepository problemaRepository;
     private final EspacioRepository espacioRepository;
+    private final EstudianteRepository estudianteRepository;
     private final ProblemaMapper mapper;
 
     @Override
@@ -41,53 +46,73 @@ public class ProblemaServiceImpl implements ProblemaService {
     }
 
     @Override
-    public ProblemaDtoResponse saveProblema(ProblemaDtoRequest dto) {
-        // 1) mapear DTO → entidad (sin espacio)
-        Problema nueva = mapper.toEntity(dto);
+    public List<ProblemaDtoResponse> findProblemasPorEstudiante(Long idEst) {
+        return problemaRepository.findByEstudiante_IdEstudiante(idEst)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
 
-        // 2) cargar espacio o lanzar excepción
-        Espacio espacio = espacioRepository.findById(dto.espacioId())
-                .orElseThrow(() ->
-                        new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado")
-                );
-        nueva.setEspacio(espacio);
+    @Override
+    public List<ProblemaDtoResponse> findProblemasPorEstado(String estado) {
+        EstadoProblema estEnum = EstadoProblema.valueOf(estado);
+        return problemaRepository.findByEstado(estEnum)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
 
-        // 3) persistir
-        Problema saved = problemaRepository.save(nueva);
-        return mapper.toResponse(saved);
+    @Override
+    public List<ProblemaDtoResponse> findProblemasPorEspacio(Long idEspacio) {
+        return problemaRepository.findByEspacio_IdEspacio(idEspacio)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
     @Override
     public ProblemaDtoResponse updateProblema(Long idProblema, ProblemaDtoRequest dto) {
-        // 1) recuperar existente
         Problema existente = problemaRepository.findById(idProblema)
-                .orElseThrow(() ->
-                        new ProblemaNotFoundException("Problema con ID " + idProblema + " no encontrado")
-                );
-
-        // 2) actualizar campos simples
+                .orElseThrow(() -> new ProblemaNotFoundException("Problema con ID " + idProblema + " no encontrado"));
         mapper.updateFromDto(dto, existente);
-
-        // 3) si cambió el espacio asociado, recargarlo
-        if (dto.espacioId() != null &&
-                (existente.getEspacio() == null || !existente.getEspacio().getIdEspacio().equals(dto.espacioId()))) {
-
-            Espacio nuevoEsp = espacioRepository.findById(dto.espacioId())
-                    .orElseThrow(() ->
-                            new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado")
-                    );
-            existente.setEspacio(nuevoEsp);
+        // actualizar espacio si cambió
+        if (dto.espacioId() != null && !existente.getEspacio().getIdEspacio().equals(dto.espacioId())) {
+            var esp = espacioRepository.findById(dto.espacioId())
+                    .orElseThrow(() -> new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado"));
+            existente.setEspacio(esp);
         }
-
-        // 4) guardar y devolver
-        Problema updated = problemaRepository.save(existente);
-        return mapper.toResponse(updated);
+        Problema saved = problemaRepository.save(existente);
+        return mapper.toResponse(saved);
     }
 
     @Override
     public void deleteProblema(Long idProblema) {
         if (!problemaRepository.existsById(idProblema)) {
             throw new ProblemaNotFoundException("Problema con ID " + idProblema + " no encontrado");
+        }
+        problemaRepository.deleteById(idProblema);
+    }
+
+    // Estudiante methods
+    @Override
+    public ProblemaDtoResponse saveProblema(Long idEst, ProblemaDtoRequest dto) {
+        Estudiante est = estudianteRepository.findById(idEst)
+                .orElseThrow(() -> new EstudianteNotFoundException("Estudiante con ID " + idEst + " no encontrado"));
+        Problema nueva = mapper.toEntity(dto);
+        var esp = espacioRepository.findById(dto.espacioId())
+                .orElseThrow(() -> new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado"));
+        nueva.setEspacio(esp);
+        nueva.setEstudiante(est);
+        Problema saved = problemaRepository.save(nueva);
+        return mapper.toResponse(saved);
+    }
+
+    @Override
+    public void deleteProblemaEstudiante(Long idEst, Long idProblema) {
+        Problema problema = problemaRepository.findById(idProblema)
+                .orElseThrow(() -> new ProblemaNotFoundException("Problema con ID " + idProblema + " no encontrado"));
+        if (!problema.getEstudiante().getIdEstudiante().equals(idEst)) {
+            throw new SecurityException("No autorizado para eliminar este problema");
         }
         problemaRepository.deleteById(idProblema);
     }

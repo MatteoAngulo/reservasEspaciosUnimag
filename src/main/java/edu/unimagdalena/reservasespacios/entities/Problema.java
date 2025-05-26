@@ -36,6 +36,8 @@ public class Problema {
     @Column(nullable = false)
     private Date fecha;
 
-
+    @ManyToOne
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante")
+    private Estudiante estudiante;
 
 }
