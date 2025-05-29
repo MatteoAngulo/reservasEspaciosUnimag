@@ -25,7 +25,7 @@ public class EstudianteController {
 
     private final EstudianteService estudianteService;
 
-    @PostMapping("/register")
+    @PostMapping("/")
     //@PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> registrarEstudiante(@RequestBody @Valid EstudianteDTOCreate estudianteDTOCreate) {
         return new ResponseEntity<>(estudianteService.saveEstudiante(estudianteDTOCreate), HttpStatus.CREATED);
@@ -40,7 +40,7 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteService.findEstudianteById(id));
     }
 
-    @GetMapping("/por-codigo")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> findEstudianteByCodigo(@RequestParam
                                                                         @NotNull(message = "El codigo no puede estar vacio")
@@ -49,19 +49,19 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteService.findEstudianteByCodigoEstudiantil(codigo));
     }
 
-    @GetMapping("/todos")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<EstudianteDTOResponse>> findAllEstudiantes() {
         return ResponseEntity.ok(estudianteService.findEstudiantes());
     }
 
-    @PutMapping("/actualizar")
+    @PutMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> actualizarEstudiante(@RequestBody @Valid EstudianteDTOUpdate estudianteDTOUpdate) {
         return ResponseEntity.ok(estudianteService.updateEstudiante(estudianteDTOUpdate));
     }
 
-    @DeleteMapping("/borrar")
+    @DeleteMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> borrarEstudiante(@RequestParam
                                                  @NotNull(message = "El codigo no puede estar vacio")

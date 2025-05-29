@@ -24,7 +24,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/register")
+    @PostMapping("/")
     //@PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> registrarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate) {
         return new ResponseEntity(usuarioService.saveUsuario(usuarioDTOCreate), HttpStatus.CREATED);
@@ -39,26 +39,26 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findUsuarioById(id));
     }
 
-    @GetMapping("/por-correo")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> obtenerUsuarioPorCorreo(@RequestParam @NotBlank(message = "El correo no puede estar en blanco")
                                                           String correo){
         return ResponseEntity.ok(usuarioService.findUsuarioByCorreo(correo));
     }
 
-    @GetMapping("/todos")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<UsuarioDTOResponse>> obtenerTodosLosUsuarios(){
         return ResponseEntity.ok(usuarioService.findUsuarios());
     }
 
-    @PutMapping("/actualizar")
+    @PutMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> actualizarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate){
         return ResponseEntity.ok(usuarioService.updateUsuario(usuarioDTOCreate));
     }
 
-    @DeleteMapping("/borrar")
+    @DeleteMapping("/")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<Void> borrarUsuario(@RequestParam @NotBlank(message = "El correo no puede estar en blanco")
                                   String correo){
