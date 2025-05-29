@@ -8,7 +8,6 @@ import edu.unimagdalena.reservasespacios.entities.Usuario;
 import edu.unimagdalena.reservasespacios.enums.RolEnum;
 import edu.unimagdalena.reservasespacios.repositories.RolRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
-import edu.unimagdalena.reservasespacios.services.interfaces.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,7 +78,7 @@ class UsuarioServiceImplTest {
 
         when(usuarioMapper.CreateDTOToUsuario(usuarioDTOCreate)).thenReturn(usuario1);
         when(usuarioRepository.findByCorreo(anyString())).thenReturn(Optional.empty());
-        when(rolRepository.findByRol(any(RolEnum.class))).thenReturn(Optional.of(Rol.builder()
+        when(rolRepository.findByRolEnum(any(RolEnum.class))).thenReturn(Optional.of(Rol.builder()
                         .rolEnum(RolEnum.ADMINISTRADOR)
                 .build()));
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario1);
@@ -134,7 +133,7 @@ class UsuarioServiceImplTest {
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario1);
         usuario1.setContrasena("contrasena");
         when(usuarioMapper.UsuarioToDTOResponse(any(Usuario.class))).thenReturn(usuarioDTOResponse1);
-        when(rolRepository.findByRol(any(RolEnum.class))).thenReturn(Optional.of(Rol.builder()
+        when(rolRepository.findByRolEnum(any(RolEnum.class))).thenReturn(Optional.of(Rol.builder()
                 .rolEnum(RolEnum.ADMINISTRADOR)
                 .build()));
         UsuarioDTOResponse response = usuarioServiceImpl.updateUsuario(usuarioDTOCreate);

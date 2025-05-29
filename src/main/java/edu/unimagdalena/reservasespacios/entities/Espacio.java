@@ -31,7 +31,7 @@ public class Espacio {
     private Boolean disponible;
 
     @ManyToOne
-    @JoinColumn(name = "id_sede", referencedColumnName = "id")
+    @JoinColumn(name = "id_sede", referencedColumnName = "sedeId")
     private Sede sede;
 
     @OneToMany(mappedBy = "espacio")

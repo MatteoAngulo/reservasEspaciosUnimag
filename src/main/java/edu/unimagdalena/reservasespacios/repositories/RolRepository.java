@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface RolRepository extends JpaRepository<Rol, Long> {
 
-    Optional<Rol> findByRol(RolEnum rol);
+    Optional<Rol> findByRolEnum(RolEnum rol);
 }

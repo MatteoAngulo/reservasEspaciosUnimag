@@ -30,12 +30,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(usuarioRepository.findByCorreo(usuario.correo()).isPresent()){
             throw new UserAlreadyExists("El correo ya esta registrado.");
         }
-        if (!rolRepository.findByRol(usuario.rol()).isPresent()){
+        if (!rolRepository.findByRolEnum(usuario.rol()).isPresent()){
             throw new RolNotFoundException("El rol no existe");
         }
 
         Usuario toSave = usuarioMapper.CreateDTOToUsuario(usuario);
-        toSave.setRol(rolRepository.findByRol(usuario.rol()).get());
+        toSave.setRol(rolRepository.findByRolEnum(usuario.rol()).get());
         toSave.setContrasena(passwordEncoder.encode(usuario.contrasena()));
 
         return usuarioMapper
@@ -71,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuarioToUpdate = usuarioRepository.findByCorreo(usuario.correo()).orElseThrow(
                 () -> new UsuarioNotFoundException("El usuario con el correo " + usuario.correo() + " no existe."));
         usuarioToUpdate.setContrasena(passwordEncoder.encode(usuario.contrasena()));
-        usuarioToUpdate.setRol(rolRepository.findByRol(usuario.rol()).get());
+        usuarioToUpdate.setRol(rolRepository.findByRolEnum(usuario.rol()).get());
         return usuarioMapper.UsuarioToDTOResponse(usuarioRepository.save(usuarioToUpdate));
     }
 

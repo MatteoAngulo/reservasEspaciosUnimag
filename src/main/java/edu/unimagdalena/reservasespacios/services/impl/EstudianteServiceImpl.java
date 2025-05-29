@@ -9,7 +9,6 @@ import edu.unimagdalena.reservasespacios.entities.Usuario;
 import edu.unimagdalena.reservasespacios.enums.RolEnum;
 import edu.unimagdalena.reservasespacios.exceptions.UserAlreadyExists;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.EstudianteNotFoundException;
-import edu.unimagdalena.reservasespacios.exceptions.notFound.RolNotFoundException;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.UsuarioNotFoundException;
 import edu.unimagdalena.reservasespacios.repositories.EstudianteRepository;
 import edu.unimagdalena.reservasespacios.repositories.RolRepository;
@@ -43,7 +42,7 @@ public class EstudianteServiceImpl implements EstudianteService {
         Usuario usuario1 = Usuario.builder()
                 .correo(estudiante.correo())
                 .contrasena(passwordEncoder.encode(estudiante.contrasena()))
-                .rol(rolRepository.findByRol(RolEnum.ESTUDIANTE).get())
+                .rol(rolRepository.findByRolEnum(RolEnum.ESTUDIANTE).get())
                 .build();
 
         Estudiante estudiante1 = Estudiante.builder()
@@ -88,7 +87,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public void deleteEstudianteByCodigo(Long codigo) {
         if (estudianteRepository.findByCodigoEstudiantil(codigo).isPresent()) {
-            estudianteRepository.deleteByCodigo(codigo);
+            estudianteRepository.deleteByCodigoEstudiantil(codigo);
         }else{
             throw new UsuarioNotFoundException("El estudiante con el codigo " + codigo + " no existe");
         }

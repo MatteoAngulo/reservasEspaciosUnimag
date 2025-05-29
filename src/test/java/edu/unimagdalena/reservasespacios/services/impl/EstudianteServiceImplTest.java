@@ -98,7 +98,7 @@ class EstudianteServiceImplTest {
 
         when(estudianteRepository.findByCodigoEstudiantil(any())).thenReturn(Optional.empty());
         when(usuarioRepository.findByCorreo(any())).thenReturn(Optional.empty());
-        when(rolRepository.findByRol(any())).thenReturn(Optional.of(Rol.builder().rolEnum(RolEnum.ESTUDIANTE).build()));
+        when(rolRepository.findByRolEnum(any())).thenReturn(Optional.of(Rol.builder().rolEnum(RolEnum.ESTUDIANTE).build()));
         when(estudianteRepository.save(any(Estudiante.class))).thenReturn(estudiante1);
         when(estudianteMapper.estudianteToDTOResponse(estudiante1)).thenReturn(estudianteDTOResponse1);
 
@@ -156,7 +156,7 @@ class EstudianteServiceImplTest {
     @Test
     void deleteEstudianteByCodigo() {
         when(estudianteRepository.findByCodigoEstudiantil(anyLong())).thenReturn(Optional.of(estudiante1));
-        doNothing().when(estudianteRepository).deleteByCodigo(anyLong());
+        doNothing().when(estudianteRepository).deleteByCodigoEstudiantil(anyLong());
         estudianteService.deleteEstudianteByCodigo(1L);
     }
 }
