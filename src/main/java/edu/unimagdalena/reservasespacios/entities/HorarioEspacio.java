@@ -21,7 +21,7 @@ public class HorarioEspacio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHorarioEspacio;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
     private Espacio espacio;
 

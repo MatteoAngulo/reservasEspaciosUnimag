@@ -39,7 +39,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findUsuarioById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/por-correo")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> obtenerUsuarioPorCorreo(@RequestParam @NotBlank(message = "El correo no puede estar en blanco")
                                                           String correo){

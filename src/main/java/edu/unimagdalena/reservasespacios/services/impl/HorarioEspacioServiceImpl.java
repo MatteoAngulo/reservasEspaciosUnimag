@@ -80,6 +80,7 @@ public class HorarioEspacioServiceImpl implements HorarioEspacioService {
                 horarioEspacioDto.horaInicio(), horarioEspacioDto.horaFin());
 
         horarioEspacio.setEspacio(espacio);
+        espacio.getHorariosEspacio().add(horarioEspacio);
 
         return horarioEspacioMapper.toDtoResponse(horarioEspacioRepository.save(horarioEspacio));
 

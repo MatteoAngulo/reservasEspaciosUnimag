@@ -24,7 +24,7 @@ public class HistorialReserva {
     private Long idHistorial;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reserva", referencedColumnName = "idReserva")
     private Reserva reserva;
 

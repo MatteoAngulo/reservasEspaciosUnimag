@@ -3,6 +3,7 @@ import edu.unimagdalena.reservasespacios.enums.TipoEspacio;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ import java.util.List;
 @Table(name = "espacios")
 public class Espacio {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEspacio;
 
     @Column(nullable = false)
@@ -34,9 +35,9 @@ public class Espacio {
     @JoinColumn(name = "id_sede", referencedColumnName = "sedeId")
     private Sede sede;
 
-    @OneToMany(mappedBy = "espacio")
+    @OneToMany(mappedBy = "espacio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Problema> problemas;
 
-    @OneToOne(mappedBy = "espacio")
-    private HorarioEspacio horarioEspacio;
+    @OneToMany(mappedBy = "espacio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HorarioEspacio> horariosEspacio = new ArrayList<>();
 }

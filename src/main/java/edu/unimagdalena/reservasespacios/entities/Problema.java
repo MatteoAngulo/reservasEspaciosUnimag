@@ -21,7 +21,7 @@ public class Problema {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProblema;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_espacio", referencedColumnName = "idEspacio")
     private Espacio espacio;
 
@@ -36,7 +36,7 @@ public class Problema {
     @Column(nullable = false)
     private Date fecha;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante")
     private Estudiante estudiante;
 

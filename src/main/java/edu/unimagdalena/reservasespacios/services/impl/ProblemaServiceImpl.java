@@ -3,7 +3,6 @@ package edu.unimagdalena.reservasespacios.services.impl;
 import edu.unimagdalena.reservasespacios.dtos.requests.ProblemaDtoRequest;
 import edu.unimagdalena.reservasespacios.dtos.response.ProblemaDtoResponse;
 import edu.unimagdalena.reservasespacios.dtos.mappers.ProblemaMapper;
-import edu.unimagdalena.reservasespacios.entities.Espacio;
 import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import edu.unimagdalena.reservasespacios.entities.Problema;
 import edu.unimagdalena.reservasespacios.enums.EstadoProblema;
@@ -103,6 +102,8 @@ public class ProblemaServiceImpl implements ProblemaService {
                 .orElseThrow(() -> new EspacioNotFoundException("Espacio con ID " + dto.espacioId() + " no encontrado"));
         nueva.setEspacio(esp);
         nueva.setEstudiante(est);
+        esp.getProblemas().add(nueva);
+        est.getProblemas().add(nueva);
         Problema saved = problemaRepository.save(nueva);
         return mapper.toResponse(saved);
     }

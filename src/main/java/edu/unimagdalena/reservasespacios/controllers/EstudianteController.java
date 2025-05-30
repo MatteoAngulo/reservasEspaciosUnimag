@@ -40,7 +40,7 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteService.findEstudianteById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/por-correo")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> findEstudianteByCodigo(@RequestParam
                                                                         @NotNull(message = "El codigo no puede estar vacio")
