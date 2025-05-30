@@ -23,7 +23,7 @@ public class Usuario {
     protected String correo;
     protected String contrasena;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rolId", referencedColumnName = "rolId")
     private Rol rol;
 }
