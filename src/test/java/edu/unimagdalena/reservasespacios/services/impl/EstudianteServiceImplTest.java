@@ -65,7 +65,7 @@ class EstudianteServiceImplTest {
                 .idEstudiante(1L)
                 .build();
 
-        estudianteDTOResponse1 = new EstudianteDTOResponse(estudiante1.getNombre());
+        estudianteDTOResponse1 = new EstudianteDTOResponse(estudiante1.getIdEstudiante(),estudiante1.getNombre());
 
         usuario2 = Usuario.builder()
                 .correo("pollo1@gmail.com")
@@ -76,13 +76,13 @@ class EstudianteServiceImplTest {
                 .build();
 
         estudiante2 = Estudiante.builder()
-                .codigoEstudiantil(1L)
+                .codigoEstudiantil(2L)
                 .nombre("pollo 1")
                 .usuario(usuario2)
                 .idEstudiante(2L)
                 .build();
 
-        estudianteDTOResponse2 = new EstudianteDTOResponse(estudiante1.getNombre());
+        estudianteDTOResponse2 = new EstudianteDTOResponse(estudiante2.getIdEstudiante(),estudiante2.getNombre());
     }
 
     @Test
@@ -142,7 +142,7 @@ class EstudianteServiceImplTest {
         when(estudianteRepository.findByCodigoEstudiantil(anyLong())).thenReturn(Optional.of(estudiante1));
         estudiante1.setNombre("pollo 1a");
         when(estudianteRepository.save(any(Estudiante.class))).thenReturn(estudiante1);
-        when(estudianteMapper.estudianteToDTOResponse(any(Estudiante.class))).thenReturn(new EstudianteDTOResponse("pollo 1a"));
+        when(estudianteMapper.estudianteToDTOResponse(any(Estudiante.class))).thenReturn(new EstudianteDTOResponse(1L,"pollo 1a"));
         estudiante1.setNombre("pollo 1");
         EstudianteDTOResponse response = estudianteService.updateEstudiante(EstudianteDTOUpdate.builder()
                         .codigoEstudiantil(estudiante1.getCodigoEstudiantil())

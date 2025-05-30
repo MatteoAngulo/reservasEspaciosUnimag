@@ -4,6 +4,7 @@ import edu.unimagdalena.reservasespacios.exceptions.*;
 import edu.unimagdalena.reservasespacios.exceptions.notFound.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -153,4 +154,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ApiError> handlerAuthorizationDenied(AuthorizationDeniedException ex){
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.FORBIDDEN.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+    }
 }

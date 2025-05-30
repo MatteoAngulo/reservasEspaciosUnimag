@@ -51,7 +51,9 @@ public class EstudianteServiceImpl implements EstudianteService {
                 .usuario(usuario1)
                 .build();
 
-        return estudianteMapper.estudianteToDTOResponse(estudianteRepository.save(estudiante1));
+        EstudianteDTOResponse response = estudianteMapper.estudianteToDTOResponse(estudianteRepository.save(estudiante1));
+        System.out.println(response);
+        return response;
     }
 
     @Override
