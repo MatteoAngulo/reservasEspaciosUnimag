@@ -25,7 +25,7 @@ public class EstudianteController {
 
     private final EstudianteService estudianteService;
 
-    @PostMapping("/")
+    @PostMapping()
     //@PreAuthorize("hasAnyRole('ESTUDIANTE','ADMINISTRADOR')")
     public ResponseEntity<EstudianteDTOResponse> registrarEstudiante(@RequestBody @Valid EstudianteDTOCreate estudianteDTOCreate) {
         return new ResponseEntity<>(estudianteService.saveEstudiante(estudianteDTOCreate), HttpStatus.CREATED);
@@ -49,7 +49,7 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteService.findEstudianteByCodigoEstudiantil(codigo));
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<EstudianteDTOResponse>> findAllEstudiantes() {
         return ResponseEntity.ok(estudianteService.findEstudiantes());

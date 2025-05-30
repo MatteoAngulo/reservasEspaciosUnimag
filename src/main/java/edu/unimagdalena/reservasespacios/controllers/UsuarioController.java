@@ -24,7 +24,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/")
+    @PostMapping("")
     //@PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<UsuarioDTOResponse> registrarUsuario(@RequestBody @Valid UsuarioDTOCreate usuarioDTOCreate) {
         return new ResponseEntity(usuarioService.saveUsuario(usuarioDTOCreate), HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findUsuarioByCorreo(correo));
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<List<UsuarioDTOResponse>> obtenerTodosLosUsuarios(){
         return ResponseEntity.ok(usuarioService.findUsuarios());
