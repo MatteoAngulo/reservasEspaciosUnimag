@@ -9,5 +9,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     Optional<Estudiante> findByCodigoEstudiantil(Long codigoEstudiantil);
     void deleteByCodigoEstudiantil(Long codigo);
 
-    Optional<Estudiante> findByIdUsuario(Long idUsuario);
+
+    Optional<Estudiante> findByUsuarioUsuarioId(Long idUsuario);
 }
