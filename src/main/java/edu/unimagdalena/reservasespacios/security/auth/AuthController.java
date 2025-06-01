@@ -2,6 +2,7 @@ package edu.unimagdalena.reservasespacios.security.auth;
 
 import edu.unimagdalena.reservasespacios.dtos.requests.LoginRequestDTO;
 import edu.unimagdalena.reservasespacios.dtos.response.LoginResponseDTO;
+import edu.unimagdalena.reservasespacios.repositories.EstudianteRepository;
 import edu.unimagdalena.reservasespacios.repositories.RolRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
 import edu.unimagdalena.reservasespacios.security.jwt.JwtUtil;
@@ -22,6 +23,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
+    private final EstudianteRepository estudianteRepository;
 
     @PostMapping("/authentication")
     public ResponseEntity<?> UserAuthenticate(@RequestBody LoginRequestDTO loginRequestDTO) throws Exception {
@@ -37,7 +39,9 @@ public class AuthController {
             throw new Exception("Invalid username or password");
         }
 
-        LoginResponseDTO response = new LoginResponseDTO(jwtUtil.generateToken(loginRequestDTO.correo()),usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getRol().getRolEnum());
+        Long idEstudiante = estudianteRepository.findByIdUsuario(usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getUsuarioId()).get().getIdEstudiante();
+
+        LoginResponseDTO response = new LoginResponseDTO(jwtUtil.generateToken(loginRequestDTO.correo()),usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getRol().getRolEnum(),idEstudiante);
 
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 

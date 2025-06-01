@@ -4,6 +4,7 @@ import edu.unimagdalena.reservasespacios.enums.RolEnum;
 
 public record LoginResponseDTO(
         String token,
-        RolEnum rol
+        RolEnum rol,
+        Long idEstudiante
 ) {
 }
