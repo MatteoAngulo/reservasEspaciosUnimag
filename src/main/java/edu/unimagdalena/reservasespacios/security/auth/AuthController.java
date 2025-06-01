@@ -2,6 +2,7 @@ package edu.unimagdalena.reservasespacios.security.auth;
 
 import edu.unimagdalena.reservasespacios.dtos.requests.LoginRequestDTO;
 import edu.unimagdalena.reservasespacios.dtos.response.LoginResponseDTO;
+import edu.unimagdalena.reservasespacios.entities.Estudiante;
 import edu.unimagdalena.reservasespacios.repositories.EstudianteRepository;
 import edu.unimagdalena.reservasespacios.repositories.UsuarioRepository;
 import edu.unimagdalena.reservasespacios.security.jwt.JwtUtil;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,15 +35,18 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(loginRequestDTO.correo(),
                             loginRequestDTO.contrasena())
             );
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
 
             throw new Exception("Invalid username or password");
         }
 
-        Long idEstudiante = estudianteRepository.findByUsuarioUsuarioId(usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getUsuarioId()).get().getIdEstudiante();
+        Optional<Estudiante> estudianteBandera = estudianteRepository.findByUsuarioUsuarioId(usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getUsuarioId());
+        Long idEstudiante = -1L;
+        if (estudianteBandera.isPresent()) {
+            idEstudiante = estudianteBandera.get().getIdEstudiante();
+        }
 
-        LoginResponseDTO response = new LoginResponseDTO(jwtUtil.generateToken(loginRequestDTO.correo()),usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getRol().getRolEnum(),idEstudiante);
+        LoginResponseDTO response = new LoginResponseDTO(jwtUtil.generateToken(loginRequestDTO.correo()), usuarioRepository.findByCorreo(loginRequestDTO.correo()).get().getRol().getRolEnum(), idEstudiante);
 
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
