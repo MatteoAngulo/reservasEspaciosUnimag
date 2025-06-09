@@ -141,7 +141,7 @@ curl -X POST http://localhost:8080/api/reservas \
 
 ## 🔗 Frontend
 
-Esta API está conectada con un frontend desarrollado por el equipo [@Lord-Jospe](https://github.com/Lord-Jospe). Puedes encontrarlo en:
+Esta API está conectada con un frontend desarrollado por el equipo ([@Lord-Jospe](https://github.com/Lord-Jospe)). Puedes encontrarlo en:
 
 👉 [Frontend Reservas Unimag](https://github.com/Lord-Jospe/fronted-Reservas_Unimag)
 
