@@ -18,6 +18,7 @@ Una API REST robusta desarrollada con Java y Spring Boot para gestionar la reser
 - **Spring Security** - Seguridad y autenticación
 - **JWT** - Tokens de autenticación
 - **Spring Data JPA** - Acceso a datos
+- **MapStruct** - Mapeo de DTO's y entidades
 - **PostgreSQL** - Base de datos
 - **Maven** - Gestión de dependencias
 - **Lombok** - Reducción de código boilerplate
